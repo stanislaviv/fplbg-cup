@@ -353,3 +353,8 @@ footer{background:#fff;border-top:1px solid var(--line);padding:22px 0;color:var
   .intro{grid-template-columns:1fr!important}
   .marketing-stage{width:100%!important}
 }
+
+/* V17 — Group Stage Schedule only */
+#schedule .schedulecard .matchtop span{font-weight:800}
+#schedule .schedulecard .teamline small{display:block}
+#schedule .roundsummary{margin-bottom:10px}

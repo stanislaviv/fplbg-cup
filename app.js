@@ -51,9 +51,26 @@ function renderRules(){
 }
 function searchTeam(){let q=$('search').value.trim(),r=$('searchResult');if(!q){r.textContent='Въведи Team ID, име на отбор или мениджър.';return}let x=D.standings.find(x=>hit(x,q))||D.teams.find(x=>hit(x,q));if(!x){r.textContent='Няма съвпадение във V5 snapshot.';return}let s=D.standings.find(y=>y.id===x.id),pot=D.pots.find(p=>p.teams.some(y=>y.id===x.id));let qs=[];for(const [gw,a] of Object.entries(D.qualification))for(const m of a)if(m.a.id===x.id||m.b.id===x.id)qs.push(`${gw.toUpperCase()} ${m.a.id===x.id?m.a.score:m.b.score} pts`);let po=D.playoff.find(m=>m.a.id===x.id||m.b.id===x.id);let ko=[];for(const rr of Object.values(D.knockout))for(const m of rr.matches)if(m.a.id===x.id||m.b.id===x.id)ko.push(rr.label);r.innerHTML=`<b>${x.team}</b> • ${x.manager} • Team ID ${x.id}${s?` • Group #${s.rank} • MP ${s.mp} • GD ${Number(s.gd)>0?'+':''}${s.gd}`:''}${pot?` • Pot ${pot.pot}`:''}${qs.length?` • ${qs.join(' • ')}`:''}${po?' • Play-off':''}${ko.length?' • KO: '+ko.join(' → '):''}`}
 
-renderStandings();renderPots();renderQual();renderPO();renderKO();renderRules();
+
+let schedulePage=1;
+function scheduleCard(m,r){
+  const aWin=Number(m.a.score)>Number(m.b.score), bWin=Number(m.b.score)>Number(m.a.score);
+  return `<article class="matchcard schedulecard"><div class="matchtop"><span>${r.label} • ${m.pair} • Match ${m.match}</span></div><div class="teamline${aWin?' winner':''}"><div><b>${m.a.team}</b><small>ID ${m.a.id} • Match pts ${m.a.mp} • GD ${Number(m.a.gd)>0?'+':''}${m.a.gd}</small></div><strong>${m.a.score}</strong></div><div class="teamline${bWin?' winner':''}"><div><b>${m.b.team}</b><small>ID ${m.b.id} • Match pts ${m.b.mp} • GD ${Number(m.b.gd)>0?'+':''}${m.b.gd}</small></div><strong>${m.b.score}</strong></div></article>`;
+}
+function renderSchedule(){
+  const key=$('scheduleRound').value,q=$('scheduleSearch').value,r=D.schedule[key];
+  const arr=r.matches.filter(m=>hit(m.a,q)||hit(m.b,q));
+  $('scheduleSummary').innerHTML=`<b>${r.label}</b><span>${r.matches.length} мача</span><span>${arr.length===r.matches.length?'Всички двойки':arr.length+' намерени'}</span>`;
+  const p=pager(arr,schedulePage,m=>scheduleCard(m,r),'schedule');schedulePage=p.page;
+  $('scheduleMatches').innerHTML=p.nav+p.html+p.nav;
+}
+function schedulePrev(){schedulePage=Math.max(1,schedulePage-1);renderSchedule()}
+function scheduleNext(){schedulePage++;renderSchedule()}
+
+renderStandings();renderPots();renderQual();renderSchedule();renderPO();renderKO();renderRules();
 $('tableSearch').addEventListener('input',renderStandings);$('statusFilter').addEventListener('change',renderStandings);
 $('qualSearch').addEventListener('input',()=>{qualPage=1;renderQual()});$('qualRound').addEventListener('change',()=>{qualPage=1;renderQual()});
+$('scheduleSearch').addEventListener('input',()=>{schedulePage=1;renderSchedule()});$('scheduleRound').addEventListener('change',()=>{schedulePage=1;renderSchedule()});
 $('poSearch').addEventListener('input',()=>{poPage=1;renderPO()});$('koSearch').addEventListener('input',()=>{koPage=1;renderKO()});$('koRound').addEventListener('change',()=>{koPage=1;renderKO()});
 $('search').addEventListener('keydown',e=>{if(e.key==='Enter')searchTeam()});
 $('menuBtn').onclick=()=>$('nav').classList.toggle('open');document.querySelectorAll('nav a').forEach(a=>a.onclick=()=>$('nav').classList.remove('open'));
