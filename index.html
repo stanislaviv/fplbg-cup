@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="bg"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FPLBG Cup 2026/27</title><link rel="stylesheet" href="style.css"></head>
+<body><header class="hero">
+<div class="topbar">
+  <div class="sitebrand approved-brand"><span class="cupmark">🏆</span><b>FPLBG Cup 2026/27</b></div>
+  <button id="menuBtn" class="menu">☰</button>
+  <nav id="nav">
+    <a href="#home">⌂ <span>Начало</span></a>
+    <a href="#qual">⚯ <span>Квалификации</span></a>
+    <a href="#groups">▦ <span>Групова фаза</span></a>
+    <a href="#pots">♟ <span>Потове</span></a>
+    <a href="#schedule">▣ <span>Програма</span></a>
+    <a href="#playoff">⚑ <span>Плейоф</span></a>
+    <a href="#bracket">♜ <span>Елиминации</span></a>
+    <a href="#rules">▧ <span>Правила</span></a>
+  </nav>
+</div>
+<div id="home" class="wrap intro"><div>
+<div class="hero-brand"><img src="https://fplbg.com/wp-content/uploads/2021/09/232207912_686651952734195_1037297542968449082_n-283x300.jpg" alt="FPLBG logo"><div><small>ОРГАНИЗИРАНО ОТ</small><strong>FPLBG</strong></div></div>
+<div class="eyebrow">FPLBG CUP • СЕЗОН 2026/27</div><h1>608 отбора.<br><span>Един шампион.</span></h1><p>Квалификации • Групова фаза • Play-off • Директни елиминации</p></div>
+<div class="stage marketing-stage">
+  <img src="assets/fplbg-cup-hero.png" alt="Пътят към FPLBG Cup 2026/27 – формат на турнира">
+</div></div></header>
+<main class="wrap">
+<section class="searchbox"><label>Намери своя отбор</label><div class="searchrow"><input id="search" placeholder="Team ID, отбор или мениджър…"><button onclick="searchTeam()">Търси</button></div><div id="searchResult" class="result muted">Търсенето използва V5 snapshot.</div></section>
+
+<section id="qual"><div class="sectionhead"><div><small>GW14–GW15 • FULL MATCH CARD</small><h2>Квалификации</h2></div><span class="pill">456 → 228 → 360 → 180</span></div>
+<div class="panel"><div class="toolbar"><input id="qualSearch" placeholder="Търси Team ID, отбор или мениджър…"><select id="qualRound"><option value="gw14">GW14 • Кръг 1</option><option value="gw15">GW15 • Кръг 2</option></select></div><div id="qualMatches" class="matchgrid"></div></div></section>
+
+<section id="groups"><div class="sectionhead"><div><small>GW16–GW25 • FULL TABLE</small><h2>Групово класиране</h2></div><span class="pill">200 отбора</span></div><div class="panel"><div class="toolbar"><input id="tableSearch" placeholder="Търси отбор, мениджър или Team ID…"><select id="statusFilter"><option value="">Всички</option><option value="Qualified">Direct</option><option value="Play-off">Play-off</option><option value="Eliminated">Out</option></select></div><div class="tablewrap full"><table class="fulltable"><thead><tr><th>#</th><th>Status</th><th>Team ID</th><th>Отбор</th><th>Мениджър</th><th>MP</th><th>GD</th><th>Pts GW14–25</th><th>W</th><th>D</th><th>L</th><th>Max</th></tr></thead><tbody id="standings"></tbody></table></div><div class="legend"><i class="direct"></i> 1–32 Direct &nbsp; <i class="po"></i> 33–96 Play-off &nbsp; <i class="out"></i> 97–200 Out</div></div></section>
+
+<section id="pots"><div class="sectionhead"><div><small>GROUP STAGE DRAW</small><h2>Потове</h2></div><span class="pill">10 × 20 отбора</span></div><div id="potsGrid" class="potsgrid"></div></section>
+
+<div id="schedule" class="anchor"></div><section id="playoff"><div class="sectionhead"><div><small>GW26–GW27 • FULL MATCH CARD</small><h2>Play-off</h2></div><span class="pill">64 отбора • 32 двойки</span></div>
+<div class="panel"><div class="toolbar"><input id="poSearch" placeholder="Търси Team ID, отбор или мениджър…"></div><div id="playoffMatches" class="matchgrid"></div></div></section>
+
+<section id="bracket"><div class="sectionhead"><div><small>GW28–GW38 • FULL BRACKET DATA</small><h2>Директни елиминации</h2></div><span class="pill">64 → Champion</span></div>
+<div class="panel"><div class="toolbar"><input id="koSearch" placeholder="Търси Team ID, отбор или мениджър…"><select id="koRound"><option value="r32">1/32 • GW28–29</option><option value="r16">1/16 • GW30–31</option><option value="r8">1/8 • GW32–33</option><option value="r4">1/4 • GW34–35</option><option value="r2">1/2 • GW36–37</option><option value="final">Final • GW38</option></select><div class="viewtoggle"><button id="cardsBtn" class="active" onclick="setKOView('cards')">Карти</button><button id="treeBtn" onclick="setKOView('tree')">Турнирна схема</button></div></div>
+<div id="koSummary" class="roundsummary"></div><div id="knockoutMatches" class="matchgrid"></div><div id="bracketTree" class="brackettree hidden"></div></div></section>
+
+<section id="rules"><div class="sectionhead"><div><small>OFFICIAL • FULL TEXT</small><h2>Правила</h2></div><span class="pill">Rules V5 • 24.09.2026</span></div><div id="rulesFull" class="panel rules"></div></section>
+</main><footer><div class="wrap"><b>FPLBG CUP 2026/27</b><span>Prototype v4 • Full qualification + play-off + knockout + rules • V5 data</span></div></footer>
+<script src="data.js"></script><script src="app.js"></script></body></html>

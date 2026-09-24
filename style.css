@@ -1,0 +1,355 @@
+
+:root{
+  --navy:#0b2348; --blue:#1267e8; --blue2:#eaf3ff; --text:#12213a;
+  --muted:#667995; --line:#dbe4ef; --bg:#f5f8fc; --card:#ffffff;
+  --green:#0a8f4e; --green-bg:#e9f9ef; --red:#c72c35; --red-bg:#fff0f1;
+  --amber:#a66b00; --amber-bg:#fff7df; --shadow:0 8px 28px rgba(17,42,78,.08);
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,"Segoe UI",sans-serif;line-height:1.45}
+.wrap{width:min(1460px,94%);margin:auto}
+.hero{background:#fff;border-bottom:1px solid var(--line)}
+.nav{height:72px;display:flex;align-items:center;gap:28px}
+.brand{display:flex;align-items:center;gap:9px;color:var(--navy);white-space:nowrap}.brand b{font-size:22px}.brand small{font-weight:700}.ball{font-size:25px}
+nav{display:flex;align-items:center;gap:5px;margin-left:auto}nav a{color:#304764;text-decoration:none;padding:24px 12px 20px;border-bottom:3px solid transparent;font-weight:700;font-size:14px}nav a:hover{color:var(--blue);border-color:var(--blue)}
+.menu{display:none;background:#fff;border:1px solid var(--line);border-radius:9px;padding:8px 10px}
+.intro{padding:42px 0 38px;display:grid;grid-template-columns:1.35fr .65fr;gap:28px;align-items:center}
+.eyebrow,.sectionhead small{color:var(--blue);font-weight:800;letter-spacing:.08em;font-size:12px}
+h1{font-size:48px;line-height:1.02;margin:10px 0 14px;color:var(--navy)}h1 span{color:var(--blue)}
+.intro p{color:var(--muted);font-size:18px}.stage{background:linear-gradient(135deg,#f4f8ff,#fff);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow)}
+.stage strong,.stage span{display:block}.stage strong{font-size:24px;margin:5px 0;color:var(--navy)}.stage small{color:var(--blue);font-weight:800}
+.progress{height:8px;background:#e5edf7;border-radius:99px;margin:18px 0;overflow:hidden}.progress i{display:block;width:48%;height:100%;background:var(--blue)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stats b{font-size:24px;color:var(--navy)}.stats small{display:block;color:var(--muted);font-size:11px}
+main{padding:28px 0 70px}section{scroll-margin-top:20px;margin-bottom:46px}
+.searchbox,.panel,.potcard{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.searchbox{padding:20px;margin-bottom:38px}.searchbox label{display:block;font-weight:800;margin-bottom:9px;color:var(--navy)}
+.searchrow,.toolbar{display:flex;gap:10px;flex-wrap:wrap}
+input,select{background:#fff;color:var(--text);border:1px solid #cfd9e6;border-radius:10px;padding:12px 14px;font-size:14px;outline:none}
+input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(18,103,232,.10)}
+.searchrow input,.toolbar input{flex:1;min-width:240px}
+button{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:12px 20px;font-weight:800;cursor:pointer}
+.result{margin-top:12px;padding:12px;background:#f7faff;border-radius:10px;border:1px solid #e5edf7}.muted{color:var(--muted)}
+.sectionhead{display:flex;justify-content:space-between;gap:18px;align-items:end;margin-bottom:14px}.sectionhead h2{font-size:29px;margin:3px 0 0;color:var(--navy)}
+.pill{background:var(--blue2);color:var(--blue);border:1px solid #cfe2ff;border-radius:999px;padding:7px 11px;font-weight:800;font-size:12px}
+.panel{padding:20px}
+.tablewrap{overflow:auto}.full{max-height:720px;border:1px solid var(--line);border-radius:12px;margin-top:14px}
+table{width:100%;border-collapse:collapse;font-size:13px}th{position:sticky;top:0;background:#f1f6fc;color:#36506f;text-align:left;padding:10px;border-bottom:1px solid var(--line);z-index:1}td{padding:9px 10px;border-bottom:1px solid #edf1f6}tbody tr:hover{background:#f7faff}
+.directrow{box-shadow:inset 3px 0 var(--green)}.porow{box-shadow:inset 3px 0 #e4a11b}.outrow{box-shadow:inset 3px 0 #a8b5c5}
+.legend{margin-top:12px;color:var(--muted);font-size:12px}.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}.direct{background:var(--green)}.po{background:#e4a11b}.out{background:#a8b5c5}
+.potsgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.potcard{overflow:hidden}.pottitle{display:flex;justify-content:space-between;padding:14px 16px;background:#f3f7fc;border-bottom:1px solid var(--line);color:var(--navy)}.potcard small{display:block;color:var(--muted)}
+.matchgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}
+.matchcard{background:#fff;border:1px solid #d8e2ee;border-radius:14px;overflow:hidden;box-shadow:0 4px 14px rgba(18,45,80,.06)}
+.matchtop{padding:10px 14px;background:#f4f7fb;color:#45617f;font-size:13px;font-weight:700;border-bottom:1px solid var(--line)}
+.teamline{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid #edf1f6;border-left:4px solid #b8c5d5;background:#fff}
+.teamline b{display:block;color:var(--navy);font-size:15px}.teamline small{display:block;color:#5f7591;margin-top:3px}.teamline strong{font-size:25px;min-width:62px;text-align:center;color:var(--navy);background:#edf3fa;padding:6px 10px;border-radius:9px}
+.teamline.winner{background:linear-gradient(90deg,var(--green-bg),#fff);border-left-color:#13bd6b}.teamline.winner b{color:#087c45}.teamline.winner strong{background:#d7f5e3;color:#08753f}
+.teamline:not(.winner) strong{background:var(--red-bg);color:var(--red)}
+.decision{padding:9px 14px;color:#60758f;font-size:12px;background:#fbfcfe}
+.roundsummary{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0}.roundsummary>*{background:#f1f6fc;border:1px solid var(--line);color:#3d5878;border-radius:999px;padding:7px 11px}
+.rules details{margin-bottom:10px;border:1px solid var(--line);border-radius:12px;background:#fff;overflow:hidden}.rules summary{cursor:pointer;padding:15px 17px;font-weight:800;color:var(--navy);background:#f5f8fc}.rulebody{padding:5px 18px 16px}.rulebody p{margin:10px 0;color:#344b68}
+footer{background:#fff;border-top:1px solid var(--line);padding:22px 0;color:var(--muted)}footer .wrap{display:flex;justify-content:space-between;gap:15px}footer b{color:var(--navy)}
+@media(max-width:900px){.intro{grid-template-columns:1fr}.potsgrid{grid-template-columns:1fr}.matchgrid{grid-template-columns:1fr}h1{font-size:38px}.menu{display:block;margin-left:auto}nav{display:none;position:absolute;left:3%;right:3%;top:66px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:8px;z-index:10;flex-direction:column;align-items:stretch}nav.open{display:flex}nav a{padding:11px;border:0}.brand small{display:none}}
+@media(max-width:600px){.wrap{width:94%}.intro{padding-top:26px}.sectionhead{align-items:flex-start;flex-direction:column}.panel{padding:12px}.teamline{padding:11px 10px}.teamline strong{font-size:21px;min-width:54px}.stats b{font-size:20px}}
+
+.pager{grid-column:1/-1;display:flex;justify-content:center;align-items:center;gap:12px;margin:8px 0}.pager button{padding:7px 12px}.pager span{color:#60758f;font-size:12px;font-weight:700}
+
+/* V6 top navigation */
+.topbar{height:72px;background:#fff;border-bottom:1px solid #e3e9f1;display:flex;align-items:center;padding:0 22px;gap:28px;position:sticky;top:0;z-index:50;box-shadow:0 2px 9px rgba(18,45,80,.04)}
+.sitebrand{display:flex;align-items:center;gap:10px;white-space:nowrap;color:#102b57}.sitebrand span{font-size:28px}.sitebrand b{font-size:23px}
+.topbar nav{display:flex;align-self:stretch;margin-left:auto;gap:2px}.topbar nav a{display:flex;align-items:center;gap:7px;padding:0 14px;color:#304969;text-decoration:none;border-bottom:4px solid transparent;font-weight:700}
+.topbar nav a:hover,.topbar nav a.active{color:#1267e8;background:#f7faff;border-bottom-color:#1267e8}
+.anchor{scroll-margin-top:90px}.hidden{display:none!important}
+.viewtoggle{display:flex;border:1px solid #cfdae8;border-radius:10px;overflow:hidden;margin-left:auto}.viewtoggle button{border-radius:0;background:#fff;color:#48617e;padding:10px 14px}.viewtoggle button.active{background:#1267e8;color:#fff}
+.brackettree{overflow-x:auto;padding:12px 2px 4px}.bracketcanvas{min-width:1750px;display:grid;grid-template-columns:1fr 230px 1fr;gap:20px;align-items:center;padding:10px}
+.bside{display:flex;gap:12px;align-items:stretch}.rightside{flex-direction:row}.bcol{flex:1;min-width:150px;display:flex;flex-direction:column}.bcol h4{text-align:center;color:#315374;margin:0 0 8px;font-size:12px}
+.bmatches{flex:1;display:flex;flex-direction:column;justify-content:space-around;gap:8px}.bmatch{border:1px solid #d5dfeb;border-radius:9px;background:#fff;box-shadow:0 2px 8px rgba(18,45,80,.05);overflow:hidden;position:relative}
+.bteam{display:flex;justify-content:space-between;gap:5px;padding:6px 7px;font-size:10px;border-bottom:1px solid #edf1f6;color:#536b86}.bteam:last-child{border-bottom:0}.bteam span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bteam.bwinner{background:#e9f9ef;color:#087c45;font-weight:700}.bteam b{font-size:11px}
+.finalcol{align-self:center}.finalcol .bmatch{border:2px solid #e4a11b}.finalcol h4{color:#9b6700;font-size:13px}.bracketnote{text-align:center;color:#71849a;font-size:12px}
+@media(max-width:1050px){.topbar{padding:0 3%}.sitebrand b{font-size:19px}.topbar nav{display:none;position:absolute;left:3%;right:3%;top:66px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:8px;z-index:60;flex-direction:column;align-items:stretch}.topbar nav.open{display:flex}.topbar nav a{padding:11px;border:0}.menu{display:block;margin-left:auto}}
+
+
+/* V7 — Rules visual formatting */
+.rules-intro{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;
+  margin-bottom:16px
+}
+.rule-stat{
+  background:#f4f8ff;border:1px solid #d8e6f8;border-radius:12px;
+  padding:13px 14px;text-align:center
+}
+.rule-stat strong{display:block;color:#0b55c9;font-size:20px}
+.rule-stat span{display:block;color:#637892;font-size:11px;margin-top:2px}
+.rules details{box-shadow:0 3px 12px rgba(18,45,80,.04)}
+.rules summary{
+  display:flex;align-items:center;gap:10px;font-size:16px;
+  background:linear-gradient(90deg,#f3f8ff,#fff)
+}
+.rules summary::after{content:"⌄";margin-left:auto;color:#1267e8;font-size:18px}
+.rules details[open] summary::after{content:"⌃"}
+.rule-icon{
+  display:inline-flex;width:34px;height:34px;align-items:center;justify-content:center;
+  border-radius:9px;background:#e7f1ff;font-size:19px;flex:0 0 auto
+}
+.rulebody{padding:8px 20px 18px 62px}
+.rulebody p{
+  position:relative;margin:10px 0;padding-left:20px;color:#344b68;line-height:1.58
+}
+.rulebody p::before{
+  content:"•";position:absolute;left:3px;color:#1267e8;font-weight:900
+}
+.rulebody p.rule-highlight{
+  background:#eef7ff;border-left:3px solid #1267e8;border-radius:7px;
+  padding:9px 12px 9px 14px;color:#173c6d;font-weight:700
+}
+.rulebody p.rule-highlight::before{display:none}
+@media(max-width:800px){
+  .rules-intro{grid-template-columns:repeat(2,1fr)}
+  .rulebody{padding-left:18px}
+}
+
+/* V8 — approved/locked tournament identity */
+.approved-brand{min-width:max-content}
+.approved-brand .cupmark{font-size:27px;line-height:1}
+.approved-brand b{font-weight:800;letter-spacing:-.25px}
+
+/* V9 — FPLBG organisation logo in hero; approved Cup header unchanged */
+.hero-brand{display:flex;align-items:center;gap:12px;margin:0 0 18px}
+.hero-brand img{width:62px;height:66px;object-fit:contain;border-radius:8px;background:#fff}
+.hero-brand div{display:flex;flex-direction:column;gap:2px}
+.hero-brand small{font-size:10px;letter-spacing:1.3px;font-weight:800;color:#71849a}
+.hero-brand strong{font-size:19px;color:#17345e;letter-spacing:.4px}
+@media(max-width:700px){.hero-brand img{width:50px;height:54px}}
+
+/* V10 — compact match cards */
+.matchgrid{gap:12px 14px}
+.match{border-radius:12px}
+.match .mhead{padding:9px 14px;font-size:12px}
+.teamrow{padding:10px 14px;min-height:52px}
+.teamrow strong{font-size:14px}
+.teamrow .meta{font-size:11px;margin-top:2px}
+.score{
+  min-width:52px;
+  padding:8px 10px;
+  border-radius:9px;
+  font-size:21px !important;
+  line-height:1;
+}
+.match .foot{padding:7px 14px;font-size:11px}
+
+/* V10 — group standings: shade the WHOLE row, not only the leading edge */
+#standingsTable tbody tr:nth-child(odd) td{
+  background:#f8fbff;
+}
+#standingsTable tbody tr:nth-child(even) td{
+  background:#ffffff;
+}
+#standingsTable tbody tr:hover td{
+  background:#eef6ff;
+}
+
+/* Preserve ranking/status accents but apply them across the complete row */
+#standingsTable tbody tr.qualify td,
+#standingsTable tbody tr.qualified td,
+#standingsTable tbody tr.top td{
+  background:#edf9f2;
+}
+#standingsTable tbody tr.playoff td{
+  background:#f1f6ff;
+}
+#standingsTable tbody tr.out td,
+#standingsTable tbody tr.eliminated td{
+  background:#fff3f3;
+}
+
+/* V11 — denser pair/match presentation everywhere */
+.matchgrid{gap:8px 10px}
+.match{border-radius:10px}
+.match .mhead{padding:6px 11px;font-size:10.5px;line-height:1.15}
+.teamrow{padding:6px 10px;min-height:40px}
+.teamrow strong{font-size:12px;line-height:1.15}
+.teamrow .meta{font-size:9.5px;line-height:1.15;margin-top:2px}
+.score{min-width:44px;padding:6px 8px;border-radius:7px;font-size:17px!important;line-height:1}
+.match .foot{padding:5px 11px;font-size:9.5px;line-height:1.2}
+.roundsummary{margin:8px 0 10px}
+.roundsummary span,.roundsummary b{font-size:11px}
+
+/* Compact bracket pairs too */
+.bmatch{border-radius:7px}
+.bteam{padding:4px 6px;font-size:9px;line-height:1.15}
+.bteam b{font-size:9.5px}
+.bmatches{gap:5px}
+.bcol h4{font-size:10px;margin-bottom:5px}
+
+/* Group standings — full-row status coding */
+#standingsTable tbody tr td{transition:background .12s ease}
+
+/* Qualified */
+#standingsTable tbody tr:has(td:nth-child(2)) td{}
+#standingsTable tbody tr.row-qualified td,
+#standingsTable tbody tr.qualified td{
+  background:#edf9f1!important;
+}
+#standingsTable tbody tr.row-qualified:hover td,
+#standingsTable tbody tr.qualified:hover td{
+  background:#e2f5e9!important;
+}
+
+/* Play-off */
+#standingsTable tbody tr.row-playoff td,
+#standingsTable tbody tr.playoff td{
+  background:#fff6e5!important;
+}
+#standingsTable tbody tr.row-playoff:hover td,
+#standingsTable tbody tr.playoff:hover td{
+  background:#ffefcf!important;
+}
+
+/* Eliminated */
+#standingsTable tbody tr.row-eliminated td,
+#standingsTable tbody tr.eliminated td,
+#standingsTable tbody tr.out td{
+  background:#fff0f0!important;
+}
+#standingsTable tbody tr.row-eliminated:hover td,
+#standingsTable tbody tr.eliminated:hover td,
+#standingsTable tbody tr.out:hover td{
+  background:#ffe5e5!important;
+}
+
+/* Denser full table */
+#standingsTable th{padding:8px 9px;font-size:10.5px}
+#standingsTable td{padding:7px 9px;font-size:10.5px;line-height:1.15}
+#standingsTable td:nth-child(4){font-weight:700}
+
+/* V12 — ACTUAL rendered classes */
+
+/* Full-row group status fills */
+#standings tr.directrow > td{background:#edf9f1 !important}
+#standings tr.porow > td{background:#fff4df !important}
+#standings tr.outrow > td{background:#fff0f0 !important}
+#standings tr.directrow:hover > td{background:#e2f5e9 !important}
+#standings tr.porow:hover > td{background:#ffeac2 !important}
+#standings tr.outrow:hover > td{background:#ffe3e3 !important}
+
+/* Keep a stronger status edge */
+#standings tr.directrow > td:first-child{border-left:3px solid #18ad62}
+#standings tr.porow > td:first-child{border-left:3px solid #e6a11a}
+#standings tr.outrow > td:first-child{border-left:3px solid #df4a4a}
+
+/* Compact the REAL match-card selectors used everywhere */
+.matchgrid{gap:8px 10px;margin-top:10px}
+.matchcard{border-radius:10px}
+.matchtop{padding:6px 10px;font-size:10.5px;line-height:1.15}
+.teamline{gap:8px;padding:6px 10px;min-height:38px;border-left-width:3px}
+.teamline b{font-size:12px;line-height:1.1}
+.teamline small{font-size:9.5px;line-height:1.1;margin-top:2px}
+.teamline strong{
+  font-size:17px !important;
+  min-width:43px;
+  padding:5px 7px;
+  border-radius:7px
+}
+.decision{padding:5px 10px;font-size:9.5px;line-height:1.15}
+
+/* Make winner tint cover full row cleanly */
+.teamline.winner{background:#edf9f2}
+.teamline:not(.winner){background:#fff}
+
+/* Dense standings */
+#standings td{padding:6px 8px!important;font-size:10px!important;line-height:1.1}
+#standings th{padding:7px 8px!important;font-size:10px!important;line-height:1.1}
+
+/* V13 — final tuning */
+
+/* Match score numerals: -15% from V12 (17px -> ~14.5px) */
+.teamline strong{
+  font-size:14.5px !important;
+  min-width:40px;
+  padding:5px 7px;
+}
+
+/* Group-stage table: +10% typography from V12 */
+#standings td{
+  font-size:11px!important;
+  line-height:1.16;
+}
+#standings th{
+  font-size:11px!important;
+  line-height:1.16;
+}
+
+/* Pots: substantially more compact */
+.potgrid{
+  gap:8px!important;
+}
+.pot{
+  border-radius:9px!important;
+}
+.pot h3,
+.pot .pothead{
+  padding:7px 9px!important;
+  margin:0!important;
+  font-size:11px!important;
+  line-height:1.15!important;
+}
+.pot ul{
+  margin:0!important;
+  padding:4px 7px 6px!important;
+}
+.pot li{
+  padding:3px 4px!important;
+  margin:0!important;
+  min-height:0!important;
+  font-size:9.5px!important;
+  line-height:1.15!important;
+}
+.pot li + li{
+  border-top:1px solid #edf2f7;
+}
+.pot li b,
+.pot li strong{
+  font-size:9.5px!important;
+}
+
+/* V14 — marketing hero artwork */
+.marketing-stage{
+  padding:0!important;
+  overflow:hidden;
+  background:#fff!important;
+  border:1px solid #dbe6f3!important;
+  box-shadow:0 12px 30px rgba(18,45,80,.08)!important;
+}
+.marketing-stage img{
+  display:block;
+  width:100%;
+  height:auto;
+  object-fit:cover;
+  border-radius:inherit;
+}
+@media(max-width:900px){
+  .marketing-stage{margin-top:12px}
+}
+
+/* V15 — hero visual uses the available space */
+.intro{
+  grid-template-columns:minmax(360px,.72fr) minmax(760px,1.55fr)!important;
+  gap:32px!important;
+  align-items:center!important;
+}
+.marketing-stage{
+  width:100%!important;
+  max-width:none!important;
+  justify-self:stretch!important;
+}
+.marketing-stage img{
+  width:100%!important;
+  height:auto!important;
+  object-fit:contain!important;
+}
+@media(min-width:1400px){
+  .intro{grid-template-columns:minmax(390px,.68fr) minmax(900px,1.7fr)!important}
+}
+@media(max-width:1050px){
+  .intro{grid-template-columns:1fr!important}
+  .marketing-stage{width:100%!important}
+}
