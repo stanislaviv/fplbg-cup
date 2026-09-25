@@ -91,8 +91,11 @@ function renderGroupQualified(){
 
 let schedulePage=1;
 function scheduleCard(m,r){
-  const aWin=Number(m.a.score)>Number(m.b.score), bWin=Number(m.b.score)>Number(m.a.score);
-  return `<article class="matchcard schedulecard"><div class="matchtop"><span>${r.label} • ${m.pair} • Match ${m.match}</span></div><div class="teamline${aWin?' winner':''}"><div><b>${m.a.team}</b><small>ID ${m.a.id} • Match pts ${m.a.mp} • GD ${Number(m.a.gd)>0?'+':''}${m.a.gd}</small></div><strong>${m.a.score}</strong></div><div class="teamline${bWin?' winner':''}"><div><b>${m.b.team}</b><small>ID ${m.b.id} • Match pts ${m.b.mp} • GD ${Number(m.b.gd)>0?'+':''}${m.b.gd}</small></div><strong>${m.b.score}</strong></div></article>`;
+  const hasScore=m.a.score!==''&&m.a.score!=null&&m.b.score!==''&&m.b.score!=null;
+  const aWin=hasScore&&Number(m.a.score)>Number(m.b.score), bWin=hasScore&&Number(m.b.score)>Number(m.a.score);
+  const meta=x=>hasScore?`ID ${x.id} • Match pts ${x.mp} • GD ${Number(x.gd)>0?'+':''}${x.gd}`:`ID ${x.id}`;
+  const score=x=>hasScore?`<strong>${x.score}</strong>`:'';
+  return `<article class="matchcard schedulecard"><div class="matchtop"><span>${r.label}${m.pair?' • '+m.pair:''} • Match ${m.match}</span></div><div class="teamline${aWin?' winner':''}"><div><b>${m.a.team}</b><small>${meta(m.a)}</small></div>${score(m.a)}</div><div class="teamline${bWin?' winner':''}"><div><b>${m.b.team}</b><small>${meta(m.b)}</small></div>${score(m.b)}</div></article>`;
 }
 function renderSchedule(){
   const key=$('scheduleRound').value,q=$('scheduleSearch').value,r=D.schedule[key];
@@ -137,8 +140,8 @@ function renderBracketTree(){
   let right=cols.slice().reverse().map(c=>`<div class="bcol"><h4>${c.label}</h4><div class="bmatches">${c.right.map(miniMatch).join('')}</div></div>`).join('');
   let f=D.knockout.final.matches;
   const finalMatch=f[0], thirdMatch=f[1];
-  const winner=m=>norm(m.a.result).startsWith('win')?m.a:m.b;
-  const champion=winner(finalMatch), third=winner(thirdMatch);
+  const champion=D.podium?.Champion||{};
+  const third=D.podium?.ThirdPlace||{};
   let center=`<div class="bcol finalcol podiumcol">
     <div class="championhero"><div class="trophy">🏆</div><small>FPLBG CUP CHAMPION 2026/27</small><strong>${champion.team}</strong><span>${champion.manager}</span></div>
     <h4>ФИНАЛ • GW38</h4><div class="bmatches finalmatchonly">${miniMatch(finalMatch)}</div>
