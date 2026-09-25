@@ -354,9 +354,7 @@ footer{background:#fff;border-top:1px solid var(--line);padding:22px 0;color:var
   .marketing-stage{width:100%!important}
 }
 
-/* V17 — Group Stage Schedule only */
-#schedule .schedulecard .matchtop span{font-weight:800}
-#schedule .schedulecard .teamline small{display:block}
+/* Group Stage Schedule uses the same match-card visual language as Play-off/Knockout */
 #schedule .roundsummary{margin-bottom:10px}
 
 

@@ -120,9 +120,11 @@ let schedulePage=1;
 function scheduleCard(m,r){
   const hasScore=m.a.score!==''&&m.a.score!=null&&m.b.score!==''&&m.b.score!=null;
   const aWin=hasScore&&Number(m.a.score)>Number(m.b.score), bWin=hasScore&&Number(m.b.score)>Number(m.a.score);
-  const meta=x=>hasScore?`ID ${x.id} • Match pts ${x.mp} • GD ${Number(x.gd)>0?'+':''}${x.gd}`:`ID ${x.id}`;
+  const meta=x=>`ID ${x.id}`;
   const score=x=>hasScore?`<strong>${x.score}</strong>`:'';
-  return `<article class="matchcard schedulecard"><div class="matchtop"><span>${r.label}${m.pair?' • '+m.pair:''} • Match ${m.match}</span></div><div class="teamline${aWin?' winner':''}"><div><b>${m.a.team}</b><small>${meta(m.a)}</small></div>${score(m.a)}</div><div class="teamline${bWin?' winner':''}"><div><b>${m.b.team}</b><small>${meta(m.b)}</small></div>${score(m.b)}</div></article>`;
+  const gd=x=>`${Number(x.gd)>0?'+':''}${x.gd}`;
+  const decision=hasScore?`Match points ${m.a.mp}–${m.b.mp} • GD ${gd(m.a)} / ${gd(m.b)}`:'';
+  return `<article class="matchcard"><div class="matchtop"><span>${r.label}${m.pair?' • '+m.pair:''} • Match ${m.match}</span></div><div class="teamline${aWin?' winner':''}"><div><b>${m.a.team}</b><small>${meta(m.a)}</small></div>${score(m.a)}</div><div class="teamline${bWin?' winner':''}"><div><b>${m.b.team}</b><small>${meta(m.b)}</small></div>${score(m.b)}</div><div class="decision">${decision}</div></article>`;
 }
 function renderSchedule(){
   const key=$('scheduleRound').value,q=$('scheduleSearch').value,r=D.schedule[key];

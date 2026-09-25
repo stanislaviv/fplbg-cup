@@ -33,7 +33,7 @@
     for(let n=1;n<=10;n++) pots.push({pot:n,teams:(raw.POTS||[]).filter(x=>Number(x.Pot)===n).map(x=>({rank:x.Position,id:String(x.TeamID),team:x.TeamName,manager:x.Manager}))});
     const schedule={};
     for(let gw=16;gw<=25;gw++){
-      const matches=(raw['GROUP SCHEDULE']||[]).filter(x=>Number(x.GW)===gw).map(x=>({match:Number(x.Match),pair:'',a:{...person(x.Team1ID,x.Team1),score:'',mp:'',gd:''},b:{...person(x.Team2ID,x.Team2),score:'',mp:'',gd:''}}));
+      const matches=(raw['GROUP SCHEDULE']||[]).filter(x=>Number(x.GW)===gw).map(x=>({match:Number(x.Match),pair:'',a:{...person(x.Team1ID,x.Team1),score:x.Team1Score,mp:x.Team1MP,gd:x.Team1GD},b:{...person(x.Team2ID,x.Team2),score:x.Team2Score,mp:x.Team2MP,gd:x.Team2GD}}));
       schedule['gw'+gw]={label:`Кръг ${gw-15} • GW${gw}`,matches};
     }
     const playoffRows=raw.PLAYOFF||[], playoff=[];
@@ -53,8 +53,8 @@
     const groupQualified=(raw['GROUP QUALIFIED']||[]).map(x=>({rank:x.Position,status:x.Status,id:String(x.TeamID),team:x.TeamName,manager:x.Manager,link:x.TeamLink}));
     const podium={};
     (raw['TOURNAMENT PODIUM']||[]).forEach(x=>{const p=person(x.TeamID,x.TeamName); podium[x.Position]={...p,position:x.Position};});
-    window.FPLBG_DATA={meta:{source:'V5 Optimisation',version:'Website V25',note:'Live JSON data from Public Export'},teams,qualification,standings,pots,playoff,knockout,rules,schedule,qualParticipants,groupQualified,podium};
-    const s=document.createElement('script'); s.src='app.js?v=22'; document.body.appendChild(s);
+    window.FPLBG_DATA={meta:{source:'V5 Optimisation',version:'Website V26',note:'Live JSON data from Public Export'},teams,qualification,standings,pots,playoff,knockout,rules,schedule,qualParticipants,groupQualified,podium};
+    const s=document.createElement('script'); s.src='app.js?v=26'; document.body.appendChild(s);
   } catch(err){
     console.error(err);
     const box=document.createElement('div'); box.className='loaderror'; box.innerHTML='<b>Грешка при зареждане на results.json</b><br>'+String(err.message||err); document.body.prepend(box);
