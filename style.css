@@ -374,3 +374,14 @@ footer{background:#fff;border-top:1px solid var(--line);padding:22px 0;color:var
 
 /* V20: compact tournament dossier in team search */
 .teamprofiledetails{margin-top:6px;font-weight:600;color:#5f7392}
+
+/* V21 – Final podium presentation */
+.podiumcol{min-width:250px;gap:10px}
+.championhero,.thirdhero{text-align:center;border-radius:14px;padding:12px 10px;background:linear-gradient(180deg,#fffaf0,#fff);border:1px solid #e8c66b;box-shadow:0 5px 18px rgba(112,78,0,.10)}
+.championhero .trophy{font-size:34px;line-height:1;margin-bottom:4px}
+.championhero small,.thirdhero small{display:block;font-weight:900;letter-spacing:.35px;color:#9b6700;font-size:10px}
+.championhero strong,.thirdhero strong{display:block;color:#082d5c;font-size:17px;margin-top:4px;overflow-wrap:anywhere}
+.championhero span,.thirdhero span{display:block;color:#657a92;font-size:11px;margin-top:2px}
+.thirdhero{background:linear-gradient(180deg,#f7f9fc,#fff);border-color:#c8d3e0}
+.thirdhero small{color:#7b5b34}.thirdhero em{display:block;color:#71849a;font-size:9px;font-style:normal;margin-top:4px}
+.finalmatchonly{display:block}.finalmatchonly .bmatch{margin:0}

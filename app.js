@@ -19,7 +19,17 @@ function renderQual(){let r=$('qualRound').value,q=$('qualSearch').value;let arr
 function qualPrev(){qualPage=Math.max(1,qualPage-1);renderQual()} function qualNext(){qualPage++;renderQual()}
 function renderPO(){let q=$('poSearch').value;let arr=D.playoff.filter(m=>hit(m.a,q)||hit(m.b,q));let p=pager(arr,poPage,m=>matchCard(m,'play-off'),'po');poPage=p.page;$('playoffMatches').innerHTML=p.nav+p.html+p.nav}
 function poPrev(){poPage=Math.max(1,poPage-1);renderPO()} function poNext(){poPage++;renderPO()}
-function renderKO(){let key=$('koRound').value,q=$('koSearch').value,r=D.knockout[key],arr=r.matches.filter(m=>hit(m.a,q)||hit(m.b,q));$('koSummary').innerHTML=`<b>${r.label}</b><span>${r.gw}</span><span>${r.matches.length} двойки</span>`;let p=pager(arr,koPage,m=>matchCard(m,key==='final'?'final':r.label),'ko');koPage=p.page;$('knockoutMatches').innerHTML=p.nav+p.html+p.nav}
+function renderKO(){
+  let key=$('koRound').value,q=$('koSearch').value,r=D.knockout[key],arr=r.matches.filter(m=>hit(m.a,q)||hit(m.b,q));
+  $('koSummary').innerHTML=`<b>${r.label}</b><span>${r.gw}</span><span>${r.matches.length} ${key==='final'?'мача':'двойки'}</span>`;
+  const card=(m)=>{
+    if(key!=='final') return matchCard(m,r.label);
+    const title=m.match===1?'🏆 ФИНАЛ • GW38':'🥉 ПЛЕЙОФ ЗА 3-ТО МЯСТО • GW38';
+    let win=x=>norm(x.result).startsWith('win')?' winner':'';
+    return `<article class="matchcard"><div class="matchtop"><span>${title}</span></div><div class="teamline${win(m.a)}"><div><b>${m.a.team}</b><small>${m.a.manager} • ID ${m.a.id}</small></div><strong>${m.a.total}</strong></div><div class="teamline${win(m.b)}"><div><b>${m.b.team}</b><small>${m.b.manager} • ID ${m.b.id}</small></div><strong>${m.b.total}</strong></div><div class="decision">${norm(m.a.result).startsWith('win')?m.a.result:m.b.result||''}</div></article>`;
+  };
+  let p=pager(arr,koPage,card,'ko');koPage=p.page;$('knockoutMatches').innerHTML=p.nav+p.html+p.nav
+}
 function koPrev(){koPage=Math.max(1,koPage-1);renderKO()} function koNext(){koPage++;renderKO()}
 function renderPots(){$('potsGrid').innerHTML='';D.pots.forEach(p=>{let rows=p.teams.map((x,i)=>`<tr><td>${i+1}</td><td class="potteam"><b>${x.team}</b><span class="potmanager"> • ${x.manager}</span></td><td>${x.rank}</td></tr>`).join('');$('potsGrid').innerHTML+=`<article class="potcard"><div class="pottitle"><b>Урна ${p.pot}</b><span>${p.teams.length} отбора</span></div><div class="tablewrap"><table><thead><tr><th>#</th><th>Отбор • Мениджър</th><th>Seed</th></tr></thead><tbody>${rows}</tbody></table></div></article>`})}
 function ruleIcon(title){
@@ -44,7 +54,7 @@ function renderRules(){
     <div class="rule-stat"><strong>64</strong><span>ДИРЕКТНИ ЕЛИМИНАЦИИ</span></div>
     <div class="rule-stat"><strong>1 🏆</strong><span>ШАМПИОН</span></div>
   </div>`;
-  $('rulesFull').innerHTML=intro+D.rules.map((s,i)=>`<details ${i===0?'open':''}>
+  $('rulesFull').innerHTML=intro+D.rules.map((s,i)=>`<details>
     <summary><span class="rule-icon">${ruleIcon(s.title)}</span>${s.title}</summary>
     <div class="rulebody">${s.paragraphs.map(rulePretty).join('')}</div>
   </details>`).join('');
@@ -126,7 +136,14 @@ function renderBracketTree(){
   let left=cols.map(c=>`<div class="bcol"><h4>${c.label}</h4><div class="bmatches">${c.left.map(miniMatch).join('')}</div></div>`).join('');
   let right=cols.slice().reverse().map(c=>`<div class="bcol"><h4>${c.label}</h4><div class="bmatches">${c.right.map(miniMatch).join('')}</div></div>`).join('');
   let f=D.knockout.final.matches;
-  let center=`<div class="bcol finalcol"><h4>ФИНАЛ • GW38</h4><div class="bmatches">${f.map(miniMatch).join('')}</div></div>`;
+  const finalMatch=f[0], thirdMatch=f[1];
+  const winner=m=>norm(m.a.result).startsWith('win')?m.a:m.b;
+  const champion=winner(finalMatch), third=winner(thirdMatch);
+  let center=`<div class="bcol finalcol podiumcol">
+    <div class="championhero"><div class="trophy">🏆</div><small>FPLBG CUP CHAMPION 2026/27</small><strong>${champion.team}</strong><span>${champion.manager}</span></div>
+    <h4>ФИНАЛ • GW38</h4><div class="bmatches finalmatchonly">${miniMatch(finalMatch)}</div>
+    <div class="thirdhero"><small>🥉 3-ТО МЯСТО</small><strong>${third.team}</strong><span>${third.manager}</span><em>Победител в плейофа за 3-то място</em></div>
+  </div>`;
   $('bracketTree').innerHTML=`<div class="bracketcanvas"><div class="bside leftside">${left}</div>${center}<div class="bside rightside">${right}</div></div><p class="bracketnote">Desktop изглед: лява и дясна половина на схемата. На телефон използвай „Карти“ за най-добра четимост.</p>`;
 }
 document.querySelectorAll('main section[id]').forEach(sec=>{const head=sec.querySelector('.sectionhead');if(head){const a=document.createElement('a');a.href='#home';a.className='homejump';a.innerHTML='⌂ Начало';head.appendChild(a)}});
