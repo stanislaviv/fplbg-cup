@@ -1,10 +1,12 @@
-FPLBG Cup Website Prototype V16 — Clean Hero
+FPLBG Cup Website Prototype V18 — Tournament Flow
 Open index.html in Chrome/Edge.
 
-V16:
-- Hero artwork replaced with clean version WITHOUT fake 'Виж правилата' /
-  'Виж схемата' buttons.
-- Large V15 hero positioning retained.
-- All V13/V12 compact styling, status colors, pots, bracket, rules and data retained.
+V18:
+- Added Participants in Qualifications list (588 teams).
+- Added Qualified for Group Stage list (200 teams).
+- Renamed Pots to Урни across the visible UI.
+- Added Home shortcut to every tournament section.
+- Урни rows are more compact: team + manager on one line.
+- All V17 design, schedule and functionality retained.
 
-V17: Added Group Stage Schedule (GW16-GW25) with round selector, search and pagination. All other V16 design retained.
+V19: Qualification participant selector (GW14/GW15) with round-specific columns; Group Stage Qualified list now includes Status.

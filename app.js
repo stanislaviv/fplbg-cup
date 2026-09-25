@@ -21,7 +21,7 @@ function renderPO(){let q=$('poSearch').value;let arr=D.playoff.filter(m=>hit(m.
 function poPrev(){poPage=Math.max(1,poPage-1);renderPO()} function poNext(){poPage++;renderPO()}
 function renderKO(){let key=$('koRound').value,q=$('koSearch').value,r=D.knockout[key],arr=r.matches.filter(m=>hit(m.a,q)||hit(m.b,q));$('koSummary').innerHTML=`<b>${r.label}</b><span>${r.gw}</span><span>${r.matches.length} двойки</span>`;let p=pager(arr,koPage,m=>matchCard(m,key==='final'?'final':r.label),'ko');koPage=p.page;$('knockoutMatches').innerHTML=p.nav+p.html+p.nav}
 function koPrev(){koPage=Math.max(1,koPage-1);renderKO()} function koNext(){koPage++;renderKO()}
-function renderPots(){D.pots.forEach(p=>{let rows=p.teams.map((x,i)=>`<tr><td>${i+1}</td><td><b>${x.team}</b><small>${x.manager}</small></td><td>${x.rank}</td></tr>`).join('');$('potsGrid').innerHTML+=`<article class="potcard"><div class="pottitle"><b>Pot ${p.pot}</b><span>${p.teams.length} отбора</span></div><div class="tablewrap"><table><thead><tr><th>#</th><th>Отбор</th><th>Seed</th></tr></thead><tbody>${rows}</tbody></table></div></article>`})}
+function renderPots(){$('potsGrid').innerHTML='';D.pots.forEach(p=>{let rows=p.teams.map((x,i)=>`<tr><td>${i+1}</td><td class="potteam"><b>${x.team}</b><span class="potmanager"> • ${x.manager}</span></td><td>${x.rank}</td></tr>`).join('');$('potsGrid').innerHTML+=`<article class="potcard"><div class="pottitle"><b>Урна ${p.pot}</b><span>${p.teams.length} отбора</span></div><div class="tablewrap"><table><thead><tr><th>#</th><th>Отбор • Мениджър</th><th>Seed</th></tr></thead><tbody>${rows}</tbody></table></div></article>`})}
 function ruleIcon(title){
   let t=norm(title);
   if(t.includes('квалиф')) return '🎯';
@@ -49,7 +49,34 @@ function renderRules(){
     <div class="rulebody">${s.paragraphs.map(rulePretty).join('')}</div>
   </details>`).join('');
 }
-function searchTeam(){let q=$('search').value.trim(),r=$('searchResult');if(!q){r.textContent='Въведи Team ID, име на отбор или мениджър.';return}let x=D.standings.find(x=>hit(x,q))||D.teams.find(x=>hit(x,q));if(!x){r.textContent='Няма съвпадение във V5 snapshot.';return}let s=D.standings.find(y=>y.id===x.id),pot=D.pots.find(p=>p.teams.some(y=>y.id===x.id));let qs=[];for(const [gw,a] of Object.entries(D.qualification))for(const m of a)if(m.a.id===x.id||m.b.id===x.id)qs.push(`${gw.toUpperCase()} ${m.a.id===x.id?m.a.score:m.b.score} pts`);let po=D.playoff.find(m=>m.a.id===x.id||m.b.id===x.id);let ko=[];for(const rr of Object.values(D.knockout))for(const m of rr.matches)if(m.a.id===x.id||m.b.id===x.id)ko.push(rr.label);r.innerHTML=`<b>${x.team}</b> • ${x.manager} • Team ID ${x.id}${s?` • Group #${s.rank} • MP ${s.mp} • GD ${Number(s.gd)>0?'+':''}${s.gd}`:''}${pot?` • Pot ${pot.pot}`:''}${qs.length?` • ${qs.join(' • ')}`:''}${po?' • Play-off':''}${ko.length?' • KO: '+ko.join(' → '):''}`}
+function searchTeam(){let q=$('search').value.trim(),r=$('searchResult');if(!q){r.textContent='Въведи Team ID, име на отбор или мениджър.';return}let x=D.standings.find(x=>hit(x,q))||D.teams.find(x=>hit(x,q));if(!x){r.textContent='Няма съвпадение във V5 snapshot.';return}let s=D.standings.find(y=>y.id===x.id),pot=D.pots.find(p=>p.teams.some(y=>y.id===x.id));let qs=[];for(const [gw,a] of Object.entries(D.qualification))for(const m of a)if(m.a.id===x.id||m.b.id===x.id)qs.push(`${gw.toUpperCase()} ${m.a.id===x.id?m.a.score:m.b.score} pts`);let po=D.playoff.find(m=>m.a.id===x.id||m.b.id===x.id);let ko=[];for(const rr of Object.values(D.knockout))for(const m of rr.matches)if(m.a.id===x.id||m.b.id===x.id)ko.push(rr.label);r.innerHTML=`<b>${x.team}</b> • ${x.manager} • Team ID ${x.id}${s?` • Group #${s.rank} • MP ${s.mp} • GD ${Number(s.gd)>0?'+':''}${s.gd}`:''}${pot?` • Урна ${pot.pot}`:''}${qs.length?` • ${qs.join(' • ')}`:''}${po?' • Play-off':''}${ko.length?' • KO: '+ko.join(' → '):''}`}
+
+
+function renderQualParticipants(){
+  const round=$('qualParticipantsRound').value;
+  const table=$('qualParticipantsTable'), empty=$('qualParticipantsEmpty'), count=$('qualParticipantsCount');
+  if(!round){
+    table.classList.add('hidden'); empty.classList.remove('hidden'); count.textContent='Избери кръг';
+    $('qualParticipants').innerHTML=''; $('qualParticipantsHead').innerHTML=''; return;
+  }
+  empty.classList.add('hidden'); table.classList.remove('hidden');
+  const q=$('qualParticipantsSearch').value;
+  const arr=(D.qualParticipants?.[round]||[]).filter(x=>hit(x,q));
+  const total=(D.qualParticipants?.[round]||[]).length;
+  count.textContent=`${total} отбора`;
+  if(round==='gw14'){
+    $('qualParticipantsHead').innerHTML='<tr><th>Team ID</th><th>Отбор</th><th>Мениджър</th><th>Total Points</th><th>Total Overall Rank</th><th>Статус</th></tr>';
+    $('qualParticipants').innerHTML=arr.map(x=>`<tr><td>${x.id}</td><td><b>${x.team}</b></td><td>${x.manager}</td><td>${x.totalPoints??''}</td><td>${x.overallRank??''}</td><td>${x.status??''}</td></tr>`).join('')||'<tr><td colspan="6" class="muted">Няма съвпадение.</td></tr>';
+  }else{
+    $('qualParticipantsHead').innerHTML='<tr><th>Team ID</th><th>Отбор</th><th>Мениджър</th><th>Статус</th><th>Rank Qualification GW15</th></tr>';
+    $('qualParticipants').innerHTML=arr.map(x=>`<tr><td>${x.id}</td><td><b>${x.team}</b></td><td>${x.manager}</td><td>${x.status??''}</td><td>${x.qualRank15??''}</td></tr>`).join('')||'<tr><td colspan="5" class="muted">Няма съвпадение.</td></tr>';
+  }
+}
+function renderGroupQualified(){
+  const q=$('groupQualifiedSearch').value;
+  const arr=(D.groupQualified||[]).filter(x=>hit(x,q));
+  $('groupQualified').innerHTML=arr.map(x=>`<tr><td><b>${x.rank}</b></td><td>${x.id}</td><td><b>${x.team}</b></td><td>${x.manager}</td><td>${x.status??''}</td></tr>`).join('')||'<tr><td colspan="5" class="muted">Няма съвпадение.</td></tr>';
+}
 
 
 let schedulePage=1;
@@ -67,7 +94,8 @@ function renderSchedule(){
 function schedulePrev(){schedulePage=Math.max(1,schedulePage-1);renderSchedule()}
 function scheduleNext(){schedulePage++;renderSchedule()}
 
-renderStandings();renderPots();renderQual();renderSchedule();renderPO();renderKO();renderRules();
+renderQualParticipants();renderQual();renderGroupQualified();renderStandings();renderPots();renderSchedule();renderPO();renderKO();renderRules();
+$('qualParticipantsSearch').addEventListener('input',renderQualParticipants);$('qualParticipantsRound').addEventListener('change',renderQualParticipants);$('groupQualifiedSearch').addEventListener('input',renderGroupQualified);
 $('tableSearch').addEventListener('input',renderStandings);$('statusFilter').addEventListener('change',renderStandings);
 $('qualSearch').addEventListener('input',()=>{qualPage=1;renderQual()});$('qualRound').addEventListener('change',()=>{qualPage=1;renderQual()});
 $('scheduleSearch').addEventListener('input',()=>{schedulePage=1;renderSchedule()});$('scheduleRound').addEventListener('change',()=>{schedulePage=1;renderSchedule()});
@@ -101,6 +129,7 @@ function renderBracketTree(){
   let center=`<div class="bcol finalcol"><h4>ФИНАЛ • GW38</h4><div class="bmatches">${f.map(miniMatch).join('')}</div></div>`;
   $('bracketTree').innerHTML=`<div class="bracketcanvas"><div class="bside leftside">${left}</div>${center}<div class="bside rightside">${right}</div></div><p class="bracketnote">Desktop изглед: лява и дясна половина на схемата. На телефон използвай „Карти“ за най-добра четимост.</p>`;
 }
+document.querySelectorAll('main section[id]').forEach(sec=>{const head=sec.querySelector('.sectionhead');if(head){const a=document.createElement('a');a.href='#home';a.className='homejump';a.innerHTML='⌂ Начало';head.appendChild(a)}});
 const sections=[...document.querySelectorAll('main section[id],header [id="home"]')];
 const navLinks=[...document.querySelectorAll('#nav a')];
 window.addEventListener('scroll',()=>{
