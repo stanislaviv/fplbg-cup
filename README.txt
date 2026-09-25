@@ -10,3 +10,5 @@ V18:
 - All V17 design, schedule and functionality retained.
 
 V19: Qualification participant selector (GW14/GW15) with round-specific columns; Group Stage Qualified list now includes Status.
+
+V20: Team search upgraded to a compact tournament dossier: position, status, MP, GD, tournament points and pot. Removed one-off qualification GW score from the profile.

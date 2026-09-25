@@ -371,3 +371,6 @@ footer{background:#fff;border-top:1px solid var(--line);padding:22px 0;color:var
 @media(max-width:600px){.sectionhead{padding-right:0}.homejump{position:static;align-self:flex-end;margin-left:auto}.potteam{white-space:normal}}
 
 .emptychoice{padding:28px 16px;text-align:center;color:#6b7d95;background:#f8fbff;border:1px dashed #cbd9ea;border-radius:12px;font-size:14px}
+
+/* V20: compact tournament dossier in team search */
+.teamprofiledetails{margin-top:6px;font-weight:600;color:#5f7392}
