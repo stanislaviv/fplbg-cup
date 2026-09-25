@@ -385,3 +385,5 @@ footer{background:#fff;border-top:1px solid var(--line);padding:22px 0;color:var
 .thirdhero{background:linear-gradient(180deg,#f7f9fc,#fff);border-color:#c8d3e0}
 .thirdhero small{color:#7b5b34}.thirdhero em{display:block;color:#71849a;font-size:9px;font-style:normal;margin-top:4px}
 .finalmatchonly{display:block}.finalmatchonly .bmatch{margin:0}
+
+.phaseempty{grid-column:1/-1;padding:24px;border:1px dashed #cbd9eb;border-radius:14px;background:#f8fbff;color:#60738d;display:flex;flex-direction:column;gap:6px}.phaseempty b{color:#17375e;font-size:16px}.phaseempty span{line-height:1.5}
