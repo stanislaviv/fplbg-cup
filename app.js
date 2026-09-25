@@ -31,7 +31,22 @@ function renderKO(){
   let p=pager(arr,koPage,card,'ko');koPage=p.page;$('knockoutMatches').innerHTML=p.nav+p.html+p.nav
 }
 function koPrev(){koPage=Math.max(1,koPage-1);renderKO()} function koNext(){koPage++;renderKO()}
-function renderPots(){$('potsGrid').innerHTML='';D.pots.forEach(p=>{let rows=p.teams.map((x,i)=>`<tr><td>${i+1}</td><td class="potteam"><b>${x.team}</b><span class="potmanager"> • ${x.manager}</span></td><td>${x.rank}</td></tr>`).join('');$('potsGrid').innerHTML+=`<article class="potcard"><div class="pottitle"><b>Урна ${p.pot}</b><span>${p.teams.length} отбора</span></div><div class="tablewrap"><table><thead><tr><th>#</th><th>Отбор • Мениджър</th><th>Seed</th></tr></thead><tbody>${rows}</tbody></table></div></article>`})}
+function renderPots(){
+  const q=$('potsSearch')?.value.trim()||'', result=$('potsSearchResult');
+  let found=[];
+  D.pots.forEach(p=>p.teams.forEach(x=>{if(q&&hit(x,q))found.push({...x,pot:p.pot})}));
+  if(result){
+    if(!q){result.className='result muted';result.textContent='Въведи Team ID, име на отбор или мениджър, за да видиш в коя урна е.'}
+    else if(!found.length){result.className='result muted';result.textContent='Няма съвпадение в урните.'}
+    else {result.className='result potresult';result.innerHTML=found.map(x=>`<div><b>${x.team}</b> • ${x.manager} • Team ID ${x.id} → <strong>Урна ${x.pot}</strong> • Seed ${x.rank}</div>`).join('')}
+  }
+  $('potsGrid').innerHTML='';
+  D.pots.forEach(p=>{
+    let rows=p.teams.map((x,i)=>{const match=q&&hit(x,q);return `<tr class="${match?'potmatch':''}"><td>${i+1}</td><td class="potteam"><b>${x.team}</b><span class="potmanager"> • ${x.manager}</span></td><td>${x.rank}</td></tr>`}).join('');
+    const cardHit=found.some(x=>x.pot===p.pot);
+    $('potsGrid').innerHTML+=`<article class="potcard${cardHit?' potcardmatch':''}"><div class="pottitle"><b>Урна ${p.pot}</b><span>${p.teams.length} отбора</span></div><div class="tablewrap"><table><thead><tr><th>#</th><th>Отбор • Мениджър</th><th>Seed</th></tr></thead><tbody>${rows}</tbody></table></div></article>`
+  })
+}
 function ruleIcon(title){
   let t=norm(title);
   if(t.includes('квалиф')) return '🎯';
@@ -89,6 +104,18 @@ function renderGroupQualified(){
 }
 
 
+const GROUP_SCHEMES={
+  gw16:'P1–P10 | P2–P9 | P3–P8 | P4–P7 | P5–P6',
+  gw17:'P1–P9 | P10–P8 | P2–P7 | P3–P6 | P4–P5',
+  gw18:'P1–P8 | P9–P7 | P10–P6 | P2–P5 | P3–P4',
+  gw19:'P1–P7 | P8–P6 | P9–P5 | P10–P4 | P2–P3',
+  gw20:'P1–P6 | P7–P5 | P8–P4 | P9–P3 | P10–P2',
+  gw21:'P1–P5 | P6–P4 | P7–P3 | P8–P2 | P9–P10',
+  gw22:'P1–P4 | P5–P3 | P6–P2 | P7–P10 | P8–P9',
+  gw23:'P1–P3 | P4–P2 | P5–P10 | P6–P9 | P7–P8',
+  gw24:'P1–P2 | P3–P10 | P4–P9 | P5–P8 | P6–P7',
+  gw25:'P1–P1 | P2–P2 | P3–P3 | P4–P4 | P5–P5 | P6–P6 | P7–P7 | P8–P8 | P9–P9 | P10–P10'
+};
 let schedulePage=1;
 function scheduleCard(m,r){
   const hasScore=m.a.score!==''&&m.a.score!=null&&m.b.score!==''&&m.b.score!=null;
@@ -100,7 +127,7 @@ function scheduleCard(m,r){
 function renderSchedule(){
   const key=$('scheduleRound').value,q=$('scheduleSearch').value,r=D.schedule[key];
   const arr=r.matches.filter(m=>hit(m.a,q)||hit(m.b,q));
-  $('scheduleSummary').innerHTML=`<b>${r.label}</b><span>${r.matches.length} мача</span><span>${arr.length===r.matches.length?'Всички двойки':arr.length+' намерени'}</span>`;
+  $('scheduleSummary').innerHTML=`<b>${r.label}</b><span>${r.matches.length} мача</span><span>${arr.length===r.matches.length?'Всички двойки':arr.length+' намерени'}</span><div class="schemeline"><strong>Схема:</strong> ${GROUP_SCHEMES[key]||''}</div>`;
   const p=pager(arr,schedulePage,m=>scheduleCard(m,r),'schedule');schedulePage=p.page;
   $('scheduleMatches').innerHTML=p.nav+p.html+p.nav;
 }
@@ -109,6 +136,7 @@ function scheduleNext(){schedulePage++;renderSchedule()}
 
 renderQualParticipants();renderQual();renderGroupQualified();renderStandings();renderPots();renderSchedule();renderPO();renderKO();renderRules();
 $('qualParticipantsSearch').addEventListener('input',renderQualParticipants);$('qualParticipantsRound').addEventListener('change',renderQualParticipants);$('groupQualifiedSearch').addEventListener('input',renderGroupQualified);
+$('potsSearch').addEventListener('input',renderPots);
 $('tableSearch').addEventListener('input',renderStandings);$('statusFilter').addEventListener('change',renderStandings);
 $('qualSearch').addEventListener('input',()=>{qualPage=1;renderQual()});$('qualRound').addEventListener('change',()=>{qualPage=1;renderQual()});
 $('scheduleSearch').addEventListener('input',()=>{schedulePage=1;renderSchedule()});$('scheduleRound').addEventListener('change',()=>{schedulePage=1;renderSchedule()});

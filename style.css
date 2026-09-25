@@ -385,3 +385,12 @@ footer{background:#fff;border-top:1px solid var(--line);padding:22px 0;color:var
 .thirdhero{background:linear-gradient(180deg,#f7f9fc,#fff);border-color:#c8d3e0}
 .thirdhero small{color:#7b5b34}.thirdhero em{display:block;color:#71849a;font-size:9px;font-style:normal;margin-top:4px}
 .finalmatchonly{display:block}.finalmatchonly .bmatch{margin:0}
+
+
+/* V25 — Group Stage UX: Pots → Schedule → Standings */
+.potssearchpanel{margin-bottom:14px}
+.potresult strong{color:var(--blue)}
+.potcardmatch{box-shadow:0 0 0 2px rgba(18,103,232,.22),var(--shadow)}
+.potmatch{background:#eaf3ff!important;box-shadow:inset 4px 0 var(--blue)}
+.schemeline{flex-basis:100%;border-radius:10px!important;background:#eaf3ff!important;border-color:#cfe2ff!important;color:#173c6d!important;line-height:1.45}
+.schemeline strong{color:var(--blue)}

@@ -10,9 +10,9 @@
     <a href="#qualparticipants">☷ <span>Участници</span></a>
     <a href="#qual">⚯ <span>Квалификации</span></a>
     <a href="#groupqualified">✓ <span>Класирани</span></a>
-    <a href="#groups">▦ <span>Групова фаза</span></a>
     <a href="#pots">♟ <span>Урни</span></a>
     <a href="#schedule">▣ <span>Програма</span></a>
+    <a href="#groups">▦ <span>Класиране</span></a>
     <a href="#playoff">⚑ <span>Плейоф</span></a>
     <a href="#bracket">♜ <span>Елиминации</span></a>
     <a href="#rules">▧ <span>Правила</span></a>
@@ -36,12 +36,12 @@
 <section id="groupqualified"><div class="sectionhead"><div><small>СЛЕД GW15 • GROUP STAGE FIELD</small><h2>Класирани за груповата фаза</h2></div><span class="pill">200 отбора</span></div>
 <div class="panel"><div class="toolbar"><input id="groupQualifiedSearch" placeholder="Търси Team ID, отбор или мениджър…"></div><div class="tablewrap full"><table class="fulltable compactlist"><thead><tr><th>#</th><th>Team ID</th><th>Отбор</th><th>Мениджър</th><th>Статус</th></tr></thead><tbody id="groupQualified"></tbody></table></div></div></section>
 
-<section id="groups"><div class="sectionhead"><div><small>GW16–GW25 • FULL TABLE</small><h2>Групово класиране</h2></div><span class="pill">200 отбора</span></div><div class="panel"><div class="toolbar"><input id="tableSearch" placeholder="Търси отбор, мениджър или Team ID…"><select id="statusFilter"><option value="">Всички</option><option value="Qualified">Direct</option><option value="Play-off">Play-off</option><option value="Eliminated">Out</option></select></div><div class="tablewrap full"><table class="fulltable"><thead><tr><th>#</th><th>Status</th><th>Team ID</th><th>Отбор</th><th>Мениджър</th><th>MP</th><th>GD</th><th>Pts GW14–25</th><th>W</th><th>D</th><th>L</th><th>Max</th></tr></thead><tbody id="standings"></tbody></table></div><div class="legend"><i class="direct"></i> 1–32 Direct &nbsp; <i class="po"></i> 33–96 Play-off &nbsp; <i class="out"></i> 97–200 Out</div></div></section>
-
-<section id="pots"><div class="sectionhead"><div><small>GROUP STAGE DRAW</small><h2>Урни</h2></div><span class="pill">10 × 20 отбора</span></div><div id="potsGrid" class="potsgrid"></div></section>
+<section id="pots"><div class="sectionhead"><div><small>GROUP STAGE DRAW</small><h2>Урни</h2></div><span class="pill">10 × 20 отбора</span></div><div class="panel potssearchpanel"><div class="toolbar"><input id="potsSearch" placeholder="Търси Team ID, отбор или мениджър…"></div><div id="potsSearchResult" class="result muted">Въведи Team ID, име на отбор или мениджър, за да видиш в коя урна е.</div></div><div id="potsGrid" class="potsgrid"></div></section>
 
 <section id="schedule"><div class="sectionhead"><div><small>GW16–GW25 • 10 КРЪГА</small><h2>Програма</h2></div><span class="pill">100 мача на кръг</span></div>
 <div class="panel"><div class="toolbar"><input id="scheduleSearch" placeholder="Търси Team ID или отбор…"><select id="scheduleRound"><option value="gw16">Кръг 1 • GW16</option><option value="gw17">Кръг 2 • GW17</option><option value="gw18">Кръг 3 • GW18</option><option value="gw19">Кръг 4 • GW19</option><option value="gw20">Кръг 5 • GW20</option><option value="gw21">Кръг 6 • GW21</option><option value="gw22">Кръг 7 • GW22</option><option value="gw23">Кръг 8 • GW23</option><option value="gw24">Кръг 9 • GW24</option><option value="gw25">Кръг 10 • GW25</option></select></div><div id="scheduleSummary" class="roundsummary"></div><div id="scheduleMatches" class="matchgrid"></div></div></section>
+
+<section id="groups"><div class="sectionhead"><div><small>GW16–GW25 • FULL TABLE</small><h2>Групово класиране</h2></div><span class="pill">200 отбора</span></div><div class="panel"><div class="toolbar"><input id="tableSearch" placeholder="Търси отбор, мениджър или Team ID…"><select id="statusFilter"><option value="">Всички</option><option value="Qualified">Direct</option><option value="Play-off">Play-off</option><option value="Eliminated">Out</option></select></div><div class="tablewrap full"><table class="fulltable"><thead><tr><th>#</th><th>Status</th><th>Team ID</th><th>Отбор</th><th>Мениджър</th><th>MP</th><th>GD</th><th>Pts GW14–25</th><th>W</th><th>D</th><th>L</th><th>Max</th></tr></thead><tbody id="standings"></tbody></table></div><div class="legend"><i class="direct"></i> 1–32 Direct &nbsp; <i class="po"></i> 33–96 Play-off &nbsp; <i class="out"></i> 97–200 Out</div></div></section>
 
 <section id="playoff"><div class="sectionhead"><div><small>GW26–GW27 • FULL MATCH CARD</small><h2>Play-off</h2></div><span class="pill">64 отбора • 32 двойки</span></div>
 <div class="panel"><div class="toolbar"><input id="poSearch" placeholder="Търси Team ID, отбор или мениджър…"></div><div id="playoffMatches" class="matchgrid"></div></div></section>
@@ -51,5 +51,5 @@
 <div id="koSummary" class="roundsummary"></div><div id="knockoutMatches" class="matchgrid"></div><div id="bracketTree" class="brackettree hidden"></div></div></section>
 
 <section id="rules"><div class="sectionhead"><div><small>OFFICIAL • FULL TEXT</small><h2>Правила</h2></div><span class="pill">Rules V5 • 24.09.2026</span></div><div id="rulesFull" class="panel rules"></div></section>
-</main><footer><div class="wrap"><b>FPLBG CUP 2026/27</b><span>V22 • Team Profile + Final Podium • V5 data</span></div></footer>
-<script src="loader.js?v=22"></script></body></html>
+</main><footer><div class="wrap"><b>FPLBG CUP 2026/27</b><span>V25 • Group Stage UX • V5 data</span></div></footer>
+<script src="loader.js?v=25"></script></body></html>
