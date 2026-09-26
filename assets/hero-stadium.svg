@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 520" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="sky" x1="0" x2="1">
+      <stop offset="0" stop-color="#e9f6ff"/>
+      <stop offset=".52" stop-color="#f7fbff"/>
+      <stop offset="1" stop-color="#e9fbf2"/>
+    </linearGradient>
+    <linearGradient id="stand" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#55a8dc" stop-opacity=".34"/>
+      <stop offset="1" stop-color="#1876b8" stop-opacity=".06"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop offset="0" stop-color="#fff" stop-opacity=".98"/>
+      <stop offset=".22" stop-color="#dff5ff" stop-opacity=".65"/>
+      <stop offset="1" stop-color="#dff5ff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="520" fill="url(#sky)"/>
+  <!-- soft pitch / lower atmosphere -->
+  <path d="M0 390 Q960 310 1920 390 L1920 520 L0 520Z" fill="#71d7a2" opacity=".08"/>
+  <!-- left and right stadium bowls -->
+  <path d="M0 110 Q250 150 560 320 L560 500 L0 500Z" fill="url(#stand)"/>
+  <path d="M1920 110 Q1670 150 1360 320 L1360 500 L1920 500Z" fill="url(#stand)"/>
+  <g fill="none" stroke="#3f96cf" stroke-opacity=".16" stroke-width="5">
+    <path d="M0 150 Q260 185 545 345"/><path d="M0 205 Q250 230 530 375"/><path d="M0 260 Q240 280 510 405"/>
+    <path d="M1920 150 Q1660 185 1375 345"/><path d="M1920 205 Q1670 230 1390 375"/><path d="M1920 260 Q1680 280 1410 405"/>
+  </g>
+  <!-- floodlight towers -->
+  <g stroke="#5ba6d5" stroke-opacity=".23" fill="none" stroke-width="5">
+    <path d="M95 25 L165 350 M1825 25 L1755 350"/>
+    <path d="M70 80 L205 80 M1715 80 L1850 80"/>
+  </g>
+  <g fill="#fff" opacity=".9">
+    <circle cx="88" cy="74" r="8"/><circle cx="112" cy="74" r="8"/><circle cx="136" cy="74" r="8"/><circle cx="160" cy="74" r="8"/><circle cx="184" cy="74" r="8"/>
+    <circle cx="1736" cy="74" r="8"/><circle cx="1760" cy="74" r="8"/><circle cx="1784" cy="74" r="8"/><circle cx="1808" cy="74" r="8"/><circle cx="1832" cy="74" r="8"/>
+  </g>
+  <circle cx="135" cy="80" r="125" fill="url(#glow)" opacity=".65"/><circle cx="1785" cy="80" r="125" fill="url(#glow)" opacity=".65"/>
+  <!-- subtle hex motifs -->
+  <g fill="#61d36e" opacity=".10">
+    <path d="M55 320l28-16 28 16v32l-28 16-28-16z"/><path d="M112 355l22-13 22 13v26l-22 13-22-13z"/>
+    <path d="M1809 330l28-16 28 16v32l-28 16-28-16z"/><path d="M1764 372l20-12 20 12v24l-20 12-20-12z"/>
+  </g>
+</svg>

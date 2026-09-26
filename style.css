@@ -429,22 +429,27 @@ footer .devcredit{margin-left:auto;font-size:11px;color:#71849a;white-space:nowr
 .social-links a:nth-child(3):hover{color:#FF0000;background:#ffe5e5}
 
 
-/* V30.2 — FPLBG Visual Refresh + visible stadium atmosphere */
+/* V30 — FPLBG Visual Refresh: light blue/green tournament atmosphere */
 body{
-  background-color:#f1f8fb;
-  background-image:
-    url("assets/stadium-watermark.svg"),
-    radial-gradient(circle at 8% 18%,rgba(18,103,232,.13),transparent 31%),
-    radial-gradient(circle at 92% 20%,rgba(70,210,125,.15),transparent 32%),
+  background:
+    radial-gradient(circle at 8% 18%,rgba(18,103,232,.10),transparent 30%),
+    radial-gradient(circle at 92% 20%,rgba(70,210,125,.12),transparent 31%),
+    radial-gradient(circle at 50% 82%,rgba(18,103,232,.055),transparent 38%),
     linear-gradient(135deg,#f3f9ff 0%,#edf8f8 48%,#f1fbf5 100%);
-  background-size:1920px 1080px,auto,auto,auto;
-  background-position:top center,center,center,center;
-  background-repeat:repeat-y,no-repeat,no-repeat,no-repeat;
-  background-attachment:fixed,fixed,fixed,fixed;
+  background-attachment:fixed;
 }
-.hero{background:linear-gradient(120deg,rgba(255,255,255,.82),rgba(242,250,255,.74) 58%,rgba(238,251,244,.74))}
+.hero{background:linear-gradient(120deg,rgba(255,255,255,.84),rgba(242,250,255,.78) 58%,rgba(238,251,244,.78))}
 .panel,.searchpanel,.tablewrap,.rulecard,.bracketcol{backdrop-filter:blur(2px)}
 
-/* V30.1 — subtle stadium watermark atmosphere only */
-/* Decorative stadium arcs, floodlights and hexagons live in the body background.
-   Cards/tables and all tournament functionality remain unchanged. */
+/* V30.3 — HERO-ONLY stadium atmosphere. Data sections keep the V30 page background. */
+.hero{
+  background:
+    linear-gradient(90deg,rgba(242,250,255,.28),rgba(255,255,255,.18) 48%,rgba(238,251,244,.28)),
+    url("assets/hero-stadium.svg") center 72px / 100% calc(100% - 72px) no-repeat;
+  border-bottom:1px solid var(--line);
+}
+.hero .topbar{background:#fff;}
+.hero .intro{position:relative;z-index:1;}
+@media(max-width:900px){
+  .hero{background-position:center 72px;background-size:auto calc(100% - 72px);}
+}

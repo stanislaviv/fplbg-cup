@@ -1,9 +1,24 @@
-FPLBG Cup Website V30.2 — Stadium Background Fix
+FPLBG Cup Website V22 – JSON Integration
 
-Changes from V30.1:
-- Stadium atmosphere is now a real visible SVG background asset, not only an ultra-subtle CSS watermark.
-- Kept the light FPLBG blue/green theme and white data cards/tables.
-- Added cache-busting version to style.css so GitHub Pages/browser loads the new visual immediately.
-- Footer version updated to V30.2.
-- Rules V6 content preserved.
-- No changes to results.json, tournament logic, qualification, pots, schedule, standings, Journey, play-off or knockout calculations.
+- V21 visual design preserved.
+- Tournament data is loaded from results.json generated from V5 Public Export.
+- data.js is no longer loaded by the website.
+- Tournament podium is read from TOURNAMENT PODIUM in results.json; the website does not calculate the champion/third place winner.
+- Rules remain a static presentation resource in rules.json.
+- Group schedule currently uses the normalized pairing data available in GROUP SCHEDULE; score/stat fields are shown only when present in the export.
+
+Publish workflow: V5 Refresh/QA -> Power Automate -> results.json -> replace results.json in GitHub.
+
+
+V25 — Group Stage UX
+- Group Stage order changed to Pots → Schedule → Standings.
+- Added Pots search by Team ID, team or manager; result shows the matching pot and seed.
+- Added the verified pot-pairing scheme above every Group Schedule round (GW16–GW25).
+- No tournament data or calculation logic changed.
+
+
+V30 – FPLBG Visual Refresh & Rules V6 Sync
+- Light FPLBG blue/green background refresh
+- Rules excerpt synchronized from Rules V6 (26.09.2026)
+- Rules badge updated to V6
+- No tournament logic or results.json changes
