@@ -1,8 +1,9 @@
-V30.6 – Hero Secondary Text Blue Contrast Fix
+FPLBG Cup Website V30.6 — Exact Hero Blue Text Fix
 
-Based directly on V30.5.
-Only two Hero text elements were changed to FPLBG blue:
-- ОРГАНИЗИРАНО ОТ
-- Квалификации • Групова фаза • Play-off • Директни елиминации
+Base: V30.5 Real Stadium Hero.
+Only two Hero text elements changed to FPLBG blue (#1267e8):
+1) ОРГАНИЗИРАНО ОТ
+2) Квалификации • Групова фаза • Play-off • Директни елиминации
 
-No other visual, data, JavaScript, rules or tournament logic changes.
+No other visual, data, logic, rules, JSON, or tournament changes.
+CSS cache-bust updated to style.css?v=30.6.

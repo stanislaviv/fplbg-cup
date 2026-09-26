@@ -454,8 +454,10 @@ body{
   .hero{background-position:center 72px;background-size:auto calc(100% - 72px);}
 }
 
-/* V30.6 — Hero text contrast: only the two requested secondary labels. */
-.hero .hero-brand small,
+/* V30.6 — exact Hero text contrast fix: only the two approved labels. */
+.hero .hero-brand small{
+  color:#1267e8 !important;
+}
 .hero .intro > div:first-child > p{
-  color:var(--blue);
+  color:#1267e8 !important;
 }
