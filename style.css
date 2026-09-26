@@ -415,3 +415,15 @@ footer .devcredit{margin-left:auto;font-size:11px;color:#71849a;white-space:nowr
 .rule-full-link strong{font-size:20px}
 @media(max-width:1050px){.social-links{margin-left:0}.topbar .menu{margin-left:auto}}
 @media(max-width:800px){.rules-intro{grid-template-columns:repeat(2,1fr)}}
+
+
+/* V29 UI polish — larger branded social icons only */
+.social-links{gap:8px}
+.social-links a{width:36px;height:36px;border-radius:10px}
+.social-links svg{width:23px;height:23px}
+.social-links a:nth-child(1){color:#1877F2;background:#eef5ff}
+.social-links a:nth-child(1):hover{color:#1877F2;background:#e2efff}
+.social-links a:nth-child(2){color:#fff;background:linear-gradient(135deg,#833AB4,#FD1D1D,#FCAF45)}
+.social-links a:nth-child(2):hover{color:#fff;filter:brightness(1.05)}
+.social-links a:nth-child(3){color:#FF0000;background:#fff0f0}
+.social-links a:nth-child(3):hover{color:#FF0000;background:#ffe5e5}

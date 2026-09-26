@@ -68,7 +68,7 @@ function renderRules(){
     <div class="rule-stat"><strong>200</strong><span>ГРУПОВА ФАЗА</span></div>
     <div class="rule-stat"><strong>64</strong><span>ДИРЕКТНИ ЕЛИМИНАЦИИ</span></div>
     <div class="rule-stat"><strong>1 🏆</strong><span>ШАМПИОН</span></div>
-    <a class="rule-stat rule-full-link" href="https://github.com/stanislaviv/fplbg-cup/blob/main/Rules/Rules%20FPL%20BG%20CUP%2026%20-%2027_V6_2026-09-26_.docx" target="_blank" rel="noopener noreferrer" aria-label="Отвори пълните правила"><strong>📄</strong><span>ПЪЛНИ ПРАВИЛА</span></a>
+    <a class="rule-stat rule-full-link" href="https://docs.google.com/document/d/13c6iI925_A2b81IrsKy51RoSTkrrJ9QK/edit?usp=drive_link&ouid=104289978806425875113&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer" aria-label="Отвори пълните правила"><strong>📄</strong><span>ПЪЛНИ ПРАВИЛА</span></a>
   </div>`;
   $('rulesFull').innerHTML=intro+D.rules.map((s,i)=>`<details>
     <summary><span class="rule-icon">${ruleIcon(s.title)}</span>${s.title}</summary>
