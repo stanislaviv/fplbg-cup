@@ -427,3 +427,16 @@ footer .devcredit{margin-left:auto;font-size:11px;color:#71849a;white-space:nowr
 .social-links a:nth-child(2):hover{color:#fff;filter:brightness(1.05)}
 .social-links a:nth-child(3){color:#FF0000;background:#fff0f0}
 .social-links a:nth-child(3):hover{color:#FF0000;background:#ffe5e5}
+
+
+/* V30 — FPLBG Visual Refresh: light blue/green tournament atmosphere */
+body{
+  background:
+    radial-gradient(circle at 8% 18%,rgba(18,103,232,.10),transparent 30%),
+    radial-gradient(circle at 92% 20%,rgba(70,210,125,.12),transparent 31%),
+    radial-gradient(circle at 50% 82%,rgba(18,103,232,.055),transparent 38%),
+    linear-gradient(135deg,#f3f9ff 0%,#edf8f8 48%,#f1fbf5 100%);
+  background-attachment:fixed;
+}
+.hero{background:linear-gradient(120deg,rgba(255,255,255,.84),rgba(242,250,255,.78) 58%,rgba(238,251,244,.78))}
+.panel,.searchpanel,.tablewrap,.rulecard,.bracketcol{backdrop-filter:blur(2px)}

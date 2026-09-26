@@ -15,3 +15,10 @@ V25 — Group Stage UX
 - Added Pots search by Team ID, team or manager; result shows the matching pot and seed.
 - Added the verified pot-pairing scheme above every Group Schedule round (GW16–GW25).
 - No tournament data or calculation logic changed.
+
+
+V30 – FPLBG Visual Refresh & Rules V6 Sync
+- Light FPLBG blue/green background refresh
+- Rules excerpt synchronized from Rules V6 (26.09.2026)
+- Rules badge updated to V6
+- No tournament logic or results.json changes
