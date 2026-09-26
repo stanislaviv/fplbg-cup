@@ -402,3 +402,16 @@ footer{background:#fff;border-top:1px solid var(--line);padding:22px 0;color:var
 footer .wrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 footer .devcredit{margin-left:auto;font-size:11px;color:#71849a;white-space:nowrap}
 @media(max-width:700px){footer .devcredit{width:100%;margin-left:0;text-align:right}}
+
+
+/* V29 — social links + full rules link only */
+.social-links{display:flex;align-items:center;gap:6px;flex:0 0 auto}
+.social-links a{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;color:#61758f;text-decoration:none;transition:background .15s ease,color .15s ease}
+.social-links a:hover{background:#f1f6fc;color:#1267e8}
+.social-links svg{width:17px;height:17px;fill:currentColor}
+.rules-intro{grid-template-columns:repeat(5,minmax(0,1fr))}
+.rule-full-link{text-decoration:none;cursor:pointer}
+.rule-full-link:hover{border-color:#b8d5fb;background:#eef6ff}
+.rule-full-link strong{font-size:20px}
+@media(max-width:1050px){.social-links{margin-left:0}.topbar .menu{margin-left:auto}}
+@media(max-width:800px){.rules-intro{grid-template-columns:repeat(2,1fr)}}
