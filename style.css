@@ -431,12 +431,21 @@ footer .devcredit{margin-left:auto;font-size:11px;color:#71849a;white-space:nowr
 
 /* V30 — FPLBG Visual Refresh: light blue/green tournament atmosphere */
 body{
-  background:
+  background-image:
+    url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221920%22%20height%3D%221080%22%20viewBox%3D%220%200%201920%201080%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%231267e8%22%20stroke-width%3D%223%22%20opacity%3D%22.16%22%3E%0A%3Cpath%20d%3D%22M-140%20760%20Q210%20420%20570%20505%22%2F%3E%3Cpath%20d%3D%22M-120%20800%20Q220%20485%20535%20555%22%2F%3E%3Cpath%20d%3D%22M2060%20760%20Q1710%20420%201350%20505%22%2F%3E%3Cpath%20d%3D%22M2040%20800%20Q1700%20485%201385%20555%22%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20fill%3D%22%231267e8%22%20opacity%3D%22.13%22%3E%0A%3Ccircle%20cx%3D%2245%22%20cy%3D%22270%22%20r%3D%228%22%2F%3E%3Ccircle%20cx%3D%2272%22%20cy%3D%22250%22%20r%3D%228%22%2F%3E%3Ccircle%20cx%3D%2299%22%20cy%3D%22232%22%20r%3D%228%22%2F%3E%3Ccircle%20cx%3D%22126%22%20cy%3D%22218%22%20r%3D%228%22%2F%3E%3Ccircle%20cx%3D%22153%22%20cy%3D%22208%22%20r%3D%228%22%2F%3E%0A%3Ccircle%20cx%3D%221875%22%20cy%3D%22270%22%20r%3D%228%22%2F%3E%3Ccircle%20cx%3D%221848%22%20cy%3D%22250%22%20r%3D%228%22%2F%3E%3Ccircle%20cx%3D%221821%22%20cy%3D%22232%22%20r%3D%228%22%2F%3E%3Ccircle%20cx%3D%221794%22%20cy%3D%22218%22%20r%3D%228%22%2F%3E%3Ccircle%20cx%3D%221767%22%20cy%3D%22208%22%20r%3D%228%22%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%2342c978%22%20stroke-width%3D%222%22%20opacity%3D%22.11%22%3E%0A%3Cpath%20d%3D%22M75%20650%20l22%20-13%2022%2013%200%2026%20-22%2013%20-22%20-13z%22%2F%3E%3Cpath%20d%3D%22M120%20700%20l28%20-16%2028%2016%200%2032%20-28%2016%20-28%20-16z%22%2F%3E%3Cpath%20d%3D%22M1800%20650%20l22%20-13%2022%2013%200%2026%20-22%2013%20-22%20-13z%22%2F%3E%3Cpath%20d%3D%22M1744%20704%20l28%20-16%2028%2016%200%2032%20-28%2016%20-28%20-16z%22%2F%3E%0A%3C%2Fg%3E%0A%3Cg%20stroke%3D%22%231267e8%22%20stroke-width%3D%222%22%20opacity%3D%22.08%22%3E%3Cpath%20d%3D%22M0%20835%20Q300%20680%20600%20750%22%2F%3E%3Cpath%20d%3D%22M1920%20835%20Q1620%20680%201320%20750%22%2F%3E%3C%2Fg%3E%0A%3C%2Fsvg%3E"),
     radial-gradient(circle at 8% 18%,rgba(18,103,232,.10),transparent 30%),
     radial-gradient(circle at 92% 20%,rgba(70,210,125,.12),transparent 31%),
     radial-gradient(circle at 50% 82%,rgba(18,103,232,.055),transparent 38%),
     linear-gradient(135deg,#f3f9ff 0%,#edf8f8 48%,#f1fbf5 100%);
-  background-attachment:fixed;
+  background-size:1920px 1080px,auto,auto,auto,auto;
+  background-position:top center,center,center,center,center;
+  background-repeat:repeat-y,no-repeat,no-repeat,no-repeat,no-repeat;
+  background-attachment:fixed,fixed,fixed,fixed,fixed;
 }
 .hero{background:linear-gradient(120deg,rgba(255,255,255,.84),rgba(242,250,255,.78) 58%,rgba(238,251,244,.78))}
 .panel,.searchpanel,.tablewrap,.rulecard,.bracketcol{backdrop-filter:blur(2px)}
+
+
+/* V30.1 — subtle stadium watermark atmosphere only */
+/* Decorative stadium arcs, floodlights and hexagons live in the body background.
+   Cards/tables and all tournament functionality remain unchanged. */
