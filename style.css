@@ -395,3 +395,10 @@ footer{background:#fff;border-top:1px solid var(--line);padding:22px 0;color:var
 
 /* V27 — Team Tournament Journey: search/profile only */
 .teamjourney{padding:16px 18px}.journeyhead{font-size:17px}.journeysummary{margin-top:5px;font-weight:600;color:#5f7392}.journeytitle{margin-top:15px;padding-top:12px;border-top:1px solid #e5edf7;font-weight:800;color:#17365f}.journeylist{margin-top:8px;display:grid;gap:7px}.journeyrow{display:grid;grid-template-columns:145px 190px 1fr;gap:12px;align-items:center;padding:8px 10px;border-radius:9px;background:#fff;border:1px solid #edf2f8}.journeyrow span{font-size:12px;font-weight:800;color:#1768c5;text-transform:uppercase}.journeyrow strong{color:#17365f}.journeyrow em{font-style:normal;color:#5f7392}@media(max-width:700px){.journeyrow{grid-template-columns:1fr}.journeyrow strong,.journeyrow em{margin-top:-4px}}
+
+
+/* V28 — two-leg score detail only */
+.legscore{display:block!important;margin-top:3px!important;font-size:10px!important;font-weight:700!important;color:#6b7d95!important;letter-spacing:.05px}
+footer .wrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+footer .devcredit{margin-left:auto;font-size:11px;color:#71849a;white-space:nowrap}
+@media(max-width:700px){footer .devcredit{width:100%;margin-left:0;text-align:right}}

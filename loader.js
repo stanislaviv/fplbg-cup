@@ -36,10 +36,25 @@
       const matches=(raw['GROUP SCHEDULE']||[]).filter(x=>Number(x.GW)===gw).map(x=>({match:Number(x.Match),pair:'',a:{...person(x.Team1ID,x.Team1),score:x.Team1Score,mp:x.Team1MP,gd:x.Team1GD},b:{...person(x.Team2ID,x.Team2),score:x.Team2Score,mp:x.Team2MP,gd:x.Team2GD}}));
       schedule['gw'+gw]={label:`Кръг ${gw-15} • GW${gw}`,matches};
     }
+    const legSets={
+      playoff:{rows:raw['PLAYOFF LEGS']||[],gws:[26,27]},
+      r32:{rows:raw['R32 LEGS']||[],gws:[28,29]},
+      r16:{rows:raw['R16 LEGS']||[],gws:[30,31]},
+      r8:{rows:raw['R8 LEGS']||[],gws:[32,33]},
+      r4:{rows:raw['QF LEGS']||[],gws:[34,35]},
+      r2:{rows:raw['SF LEGS']||[],gws:[36,37]}
+    };
+    const legsFor=(key,match)=>{
+      const set=legSets[key]; if(!set) return null;
+      const x=set.rows.find(r=>Number(r.Match)===Number(match)); if(!x) return null;
+      const [g1,g2]=set.gws;
+      return {gws:[g1,g2],a:[x[`Team1GW${g1}`],x[`Team1GW${g2}`]],b:[x[`Team2GW${g1}`],x[`Team2GW${g2}`]]};
+    };
     const playoffRows=raw.PLAYOFF||[], playoff=[];
     for(let i=0;i<playoffRows.length;i+=2){
       const a=playoffRows[i],b=playoffRows[i+1]; if(!a||!b) continue;
-      playoff.push({match:i/2+1,a:{...person(a.TeamID,a.TeamName,a.Manager),seed:a.Seed,gw26:a.GW26,gw27:a.GW27,total:a.Total,result:a.Result},b:{...person(b.TeamID,b.TeamName,b.Manager),seed:b.Seed,gw26:b.GW26,gw27:b.GW27,total:b.Total,result:b.Result}});
+      const match=i/2+1, legs=legsFor('playoff',match);
+      playoff.push({match,legs,a:{...person(a.TeamID,a.TeamName,a.Manager),seed:a.Seed,gw26:a.GW26,gw27:a.GW27,total:a.Total,result:a.Result},b:{...person(b.TeamID,b.TeamName,b.Manager),seed:b.Seed,gw26:b.GW26,gw27:b.GW27,total:b.Total,result:b.Result}});
     }
     const stageMap={
       '1/32':['r32','1/32','GW28–29'],'1/16':['r16','1/16','GW30–31'],'1/8':['r8','1/8','GW32–33'],'1/4':['r4','1/4','GW34–35'],'1/2':['r2','1/2','GW36–37'],
@@ -48,13 +63,14 @@
     const knockout={r32:{label:'1/32',gw:'GW28–29',matches:[]},r16:{label:'1/16',gw:'GW30–31',matches:[]},r8:{label:'1/8',gw:'GW32–33',matches:[]},r4:{label:'1/4',gw:'GW34–35',matches:[]},r2:{label:'1/2',gw:'GW36–37',matches:[]},final:{label:'Финал',gw:'GW38',matches:[]}};
     (raw.KNOCKOUT||[]).forEach(x=>{
       const sm=stageMap[x.Stage]; if(!sm) return; const [key]=sm; const ar=x.Result||'',br=inverseResult(ar);
-      knockout[key].matches.push({match:key==='final'?(x.Stage==='Final'?1:2):Number(x.Match),stage:x.Stage,a:{...person(x.Team1ID,x.Team1),total:x.Team1Total,result:ar},b:{...person(x.Team2ID,x.Team2),total:x.Team2Total,result:br}});
+      const match=key==='final'?(x.Stage==='Final'?1:2):Number(x.Match);
+      knockout[key].matches.push({match,stage:x.Stage,legs:key==='final'?null:legsFor(key,match),a:{...person(x.Team1ID,x.Team1),total:x.Team1Total,result:ar},b:{...person(x.Team2ID,x.Team2),total:x.Team2Total,result:br}});
     });
     const groupQualified=(raw['GROUP QUALIFIED']||[]).map(x=>({rank:x.Position,status:x.Status,id:String(x.TeamID),team:x.TeamName,manager:x.Manager,link:x.TeamLink}));
     const podium={};
     (raw['TOURNAMENT PODIUM']||[]).forEach(x=>{const p=person(x.TeamID,x.TeamName); podium[x.Position]={...p,position:x.Position};});
-    window.FPLBG_DATA={meta:{source:'V5 Optimisation',version:'Website V27',note:'Live JSON data from Public Export'},teams,qualification,standings,pots,playoff,knockout,rules,schedule,qualParticipants,groupQualified,podium};
-    const s=document.createElement('script'); s.src='app.js?v=27'; document.body.appendChild(s);
+    window.FPLBG_DATA={meta:{source:'V5 Optimisation',version:'Website V28',note:'Live JSON data from Public Export'},teams,qualification,standings,pots,playoff,knockout,rules,schedule,qualParticipants,groupQualified,podium};
+    const s=document.createElement('script'); s.src='app.js?v=28'; document.body.appendChild(s);
   } catch(err){
     console.error(err);
     const box=document.createElement('div'); box.className='loaderror'; box.innerHTML='<b>Грешка при зареждане на results.json</b><br>'+String(err.message||err); document.body.prepend(box);
