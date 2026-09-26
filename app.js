@@ -74,7 +74,38 @@ function renderRules(){
     <div class="rulebody">${s.paragraphs.map(rulePretty).join('')}</div>
   </details>`).join('');
 }
-function searchTeam(){let q=$('search').value.trim(),r=$('searchResult');if(!q){r.textContent='Въведи Team ID, име на отбор или мениджър.';return}let x=D.standings.find(x=>hit(x,q))||D.teams.find(x=>hit(x,q));if(!x){r.textContent='Няма съвпадение във V5 snapshot.';return}let s=D.standings.find(y=>y.id===x.id),pot=D.pots.find(p=>p.teams.some(y=>y.id===x.id));let status=s?(Number(s.rank)<=32?'Директно класиран':Number(s.rank)<=96?'Плейоф':'Отпаднал'):'';let top=`<b>${x.team}</b> • ${x.manager} • Team ID ${x.id}`;let details=[];if(s){details.push(`Позиция #${s.rank}`,`Статус: ${status}`,`MP ${s.mp}`,`GD ${Number(s.gd)>0?'+':''}${s.gd}`,`Турнирни точки ${s.pts}`)}if(pot)details.push(`Урна ${pot.pot}`);r.innerHTML=`<div>${top}</div>${details.length?`<div class="teamprofiledetails">${details.join(' • ')}</div>`:''}`}
+function searchTeam(){
+  let q=$('search').value.trim(),r=$('searchResult');
+  if(!q){r.textContent='Въведи Team ID, име на отбор или мениджър.';return}
+  let x=D.standings.find(x=>hit(x,q))||D.groupQualified?.find(x=>hit(x,q))||D.teams.find(x=>hit(x,q));
+  if(!x){r.textContent='Няма съвпадение във V5 snapshot.';return}
+  const id=String(x.id), team=x.team, manager=x.manager;
+  const s=D.standings.find(y=>String(y.id)===id), gq=D.groupQualified?.find(y=>String(y.id)===id);
+  const pot=D.pots.find(p=>p.teams.some(y=>String(y.id)===id));
+  const qp14=(D.qualParticipants?.gw14||[]).find(y=>String(y.id)===id), qp15=(D.qualParticipants?.gw15||[]).find(y=>String(y.id)===id);
+  const q14=(D.qualification?.gw14||[]).find(m=>String(m.a.id)===id||String(m.b.id)===id);
+  const q15=(D.qualification?.gw15||[]).find(m=>String(m.a.id)===id||String(m.b.id)===id);
+  const po=(D.playoff||[]).find(m=>String(m.a.id)===id||String(m.b.id)===id);
+  const koRounds=[['r32','1/32 • GW28–29'],['r16','1/16 • GW30–31'],['r8','1/8 • GW32–33'],['r4','1/4 • GW34–35'],['r2','1/2 • GW36–37'],['final','GW38']];
+  const side=(m)=>String(m.a.id)===id?m.a:m.b, opp=(m)=>String(m.a.id)===id?m.b:m.a;
+  const resultBG=(v='')=>norm(v).startsWith('win')?'Класиран':norm(v).startsWith('lose')?'Отпаднал':'';
+  const rows=[];
+  if(gq&&norm(gq.status).includes('шампион')) rows.push(['GW13','🏆 Действащ шампион','Гарантирано място • Position #20']);
+  else if(gq&&norm(gq.status).includes('директ')) rows.push(['GW13','Директно класиран',`Position #${gq.rank}`]);
+  else if(qp14||q14||qp15||q15) rows.push(['GW13','Квалификации',qp14?.qualRank?`Qualification seed #${qp14.qualRank}`:'Участник']);
+  if(q14){let me=side(q14),o=opp(q14);rows.push(['GW14',resultBG(me.result),`vs ${o.team} • ${me.score}–${o.score}`])}
+  else if(qp14&&qp15) rows.push(['GW14','Bye','Класиран директно за GW15']);
+  if(q15){let me=side(q15),o=opp(q15);rows.push(['GW15',resultBG(me.result),`vs ${o.team} • ${me.score}–${o.score}`])}
+  if(gq) rows.push(['Групова фаза','Класиран',`Position #${gq.rank}${pot?' • Урна '+pot.pot:''}`]);
+  if(s){let gs=Number(s.rank)<=32?'Директно към 1/32':Number(s.rank)<=96?'Play-off':'Отпаднал';rows.push(['След GW25',gs,`#${s.rank} • MP ${s.mp} • GD ${Number(s.gd)>0?'+':''}${s.gd} • Турнирни точки ${s.pts}`])}
+  if(po){let me=side(po),o=opp(po);rows.push(['Play-off • GW26–27',resultBG(me.result),`vs ${o.team} • ${me.total}–${o.total}`])}
+  koRounds.forEach(([key,label])=>{let m=(D.knockout?.[key]?.matches||[]).find(m=>String(m.a.id)===id||String(m.b.id)===id);if(!m)return;let me=side(m),o=opp(m);let stage=m.stage==='3rd Place'?'3-то място • GW38':m.stage==='Final'?'Финал • GW38':label;rows.push([stage,resultBG(me.result),`vs ${o.team} • ${me.total}–${o.total}`])});
+  const podium=Object.values(D.podium||{}).find(y=>String(y.id)===id);
+  if(podium){let txt=podium.position==='Champion'?'🏆 Шампион':podium.position==='RunnerUp'?'🥈 Второ място':'🥉 Трето място';rows.push(['Краен резултат',txt,'FPLBG Cup 2026/27'])}
+  let current=s?(Number(s.rank)<=32?'Директно класиран':Number(s.rank)<=96?'Плейоф':'Отпаднал'):gq?'Класиран за груповата фаза':'Квалификации';
+  r.className='result teamjourney';
+  r.innerHTML=`<div class="journeyhead"><b>${team}</b> • ${manager} • Team ID ${id}</div><div class="journeysummary">${s?`Позиция #${s.rank} • `:''}Статус: ${current}${pot?` • Урна ${pot.pot}`:''}</div><div class="journeytitle">Път в турнира</div><div class="journeylist">${rows.map(z=>`<div class="journeyrow"><span>${z[0]}</span><strong>${z[1]}</strong><em>${z[2]}</em></div>`).join('')}</div>`;
+}
 
 
 function renderQualParticipants(){
