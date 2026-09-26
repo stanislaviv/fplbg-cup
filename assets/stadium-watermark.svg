@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="stand" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1267e8" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#1267e8" stop-opacity=".04"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#35b96f" stop-opacity=".24"/>
+      <stop offset="1" stop-color="#35b96f" stop-opacity=".04"/>
+    </linearGradient>
+  </defs>
+  <!-- left and right stadium stands -->
+  <path d="M0 290 Q250 390 470 620 L470 930 Q235 830 0 900Z" fill="url(#stand)"/>
+  <path d="M1920 290 Q1670 390 1450 620 L1450 930 Q1685 830 1920 900Z" fill="url(#green)"/>
+  <!-- tier lines -->
+  <g fill="none" stroke="#1267e8" stroke-opacity=".18" stroke-width="4">
+    <path d="M0 355 Q240 430 445 640"/><path d="M0 430 Q225 485 430 680"/><path d="M0 510 Q205 545 415 720"/>
+  </g>
+  <g fill="none" stroke="#35b96f" stroke-opacity=".18" stroke-width="4">
+    <path d="M1920 355 Q1680 430 1475 640"/><path d="M1920 430 Q1695 485 1490 680"/><path d="M1920 510 Q1715 545 1505 720"/>
+  </g>
+  <!-- floodlight masts -->
+  <g stroke="#1267e8" stroke-opacity=".22" fill="#1267e8" fill-opacity=".25">
+    <path d="M120 120 L80 500" stroke-width="8"/><path d="M1800 120 L1840 500" stroke-width="8"/>
+    <g transform="translate(48 90)"><rect width="170" height="58" rx="8" fill="none" stroke-width="5"/>
+      <circle cx="25" cy="20" r="7"/><circle cx="55" cy="20" r="7"/><circle cx="85" cy="20" r="7"/><circle cx="115" cy="20" r="7"/><circle cx="145" cy="20" r="7"/>
+      <circle cx="25" cy="42" r="7"/><circle cx="55" cy="42" r="7"/><circle cx="85" cy="42" r="7"/><circle cx="115" cy="42" r="7"/><circle cx="145" cy="42" r="7"/></g>
+    <g transform="translate(1702 90)"><rect width="170" height="58" rx="8" fill="none" stroke-width="5"/>
+      <circle cx="25" cy="20" r="7"/><circle cx="55" cy="20" r="7"/><circle cx="85" cy="20" r="7"/><circle cx="115" cy="20" r="7"/><circle cx="145" cy="20" r="7"/>
+      <circle cx="25" cy="42" r="7"/><circle cx="55" cy="42" r="7"/><circle cx="85" cy="42" r="7"/><circle cx="115" cy="42" r="7"/><circle cx="145" cy="42" r="7"/></g>
+  </g>
+  <!-- subtle football hex motifs at lower edges -->
+  <g fill="none" stroke="#35b96f" stroke-opacity=".20" stroke-width="4">
+    <path d="M70 760 l42-24 42 24v48l-42 24-42-24z"/><path d="M130 845 l31-18 31 18v36l-31 18-31-18z"/>
+    <path d="M1766 760 l42-24 42 24v48l-42 24-42-24z"/><path d="M1728 845 l31-18 31 18v36l-31 18-31-18z"/>
+  </g>
+  <!-- pitch horizon -->
+  <path d="M0 920 Q960 790 1920 920" fill="none" stroke="#35b96f" stroke-opacity=".12" stroke-width="8"/>
+</svg>
