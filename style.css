@@ -441,37 +441,15 @@ body{
 .hero{background:linear-gradient(120deg,rgba(255,255,255,.84),rgba(242,250,255,.78) 58%,rgba(238,251,244,.78))}
 .panel,.searchpanel,.tablewrap,.rulecard,.bracketcol{backdrop-filter:blur(2px)}
 
-/* V30.4 — exact approved Hero visual from the supplied mockup image.
-   Desktop uses the approved image 1:1 as the Hero artwork; the real navbar remains HTML.
-   Everything below the Hero keeps the existing V30 styling. */
+/* V30.5 — real stadium image asset, restricted to the homepage Hero only. */
 .hero{
-  background:#eef8fb;
+  background:
+    linear-gradient(90deg,rgba(245,251,255,.18),rgba(255,255,255,.08) 50%,rgba(241,252,246,.16)),
+    url("assets/hero-stadium-v305.png") center 72px / cover no-repeat;
   border-bottom:1px solid var(--line);
 }
 .hero .topbar{background:#fff;}
-.hero .intro{
-  max-width:none;
-  width:100%;
-  height:auto;
-  min-height:358px;
-  padding:0;
-  margin:0;
-  background:url("assets/hero-stadium-exact.png") center center / cover no-repeat;
-}
-.hero .intro > *{visibility:hidden;}
+.hero .intro{position:relative;z-index:1;}
 @media(max-width:900px){
-  .hero .intro{
-    min-height:330px;
-    background-size:cover;
-    background-position:center top;
-  }
-}
-@media(max-width:700px){
-  /* Keep the functional original Hero content on narrow screens where the wide mockup cannot fit legibly. */
-  .hero .intro{
-    min-height:0;
-    padding:34px 18px;
-    background:linear-gradient(120deg,rgba(255,255,255,.84),rgba(242,250,255,.78) 58%,rgba(238,251,244,.78));
-  }
-  .hero .intro > *{visibility:visible;}
+  .hero{background-position:center 72px;background-size:auto calc(100% - 72px);}
 }
