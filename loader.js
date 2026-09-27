@@ -28,7 +28,7 @@
       const m={match:Number(x.Match),a:{...person(x.Team1ID,x.Team1,x.Team1Manager),score:x.Team1Points,result:ar},b:{...person(x.Team2ID,x.Team2,x.Team2Manager),score:x.Team2Points,result:br},winner:x.Winner};
       (Number(x.GW)===14?qualification.gw14:qualification.gw15).push(m);
     });
-    let standings=(raw['GROUP STANDINGS']||[]).map(x=>({rank:x.Position,status:x.Status,id:String(x.TeamID),team:x.TeamName,manager:x.Manager,mp:x.MP,gd:x.GD,pts:x.TournamentPoints,w:x.W,d:x.D,l:x.L,max:x.MaxScore}));
+    let standings=(raw['GROUP STANDINGS']||[]).map(x=>({rank:x.Position,status:x.Status,id:String(x.TeamID),team:x.TeamName,manager:x.Manager,mp:(Number(x.W)||0)+(Number(x.D)||0)+(Number(x.L)||0),gd:x.GD,pts:x.TournamentPoints,w:x.W,d:x.D,l:x.L,max:x.MaxScore}));
     const pots=[];
     for(let n=1;n<=10;n++) pots.push({pot:n,teams:(raw.POTS||[]).filter(x=>Number(x.Pot)===n).map(x=>({rank:x.Position,id:String(x.TeamID),team:x.TeamName,manager:x.Manager}))});
     const schedule={};
@@ -125,8 +125,8 @@
     const groupQualified=(raw['GROUP QUALIFIED']||[]).map(x=>({rank:x.Position,status:x.Status,id:String(x.TeamID),team:x.TeamName,manager:x.Manager,link:x.TeamLink}));
     const podium={};
     (raw['TOURNAMENT PODIUM']||[]).forEach(x=>{const p=person(x.TeamID,x.TeamName); podium[x.Position]={...p,position:x.Position};});
-    window.FPLBG_DATA={meta:{source:'V5 Optimisation',version:'Website V30.8.2',note:'Live JSON data from Public Export'},teams,qualification,standings,pots,playoff,knockout,rules,schedule,qualParticipants,groupQualified,podium};
-    const s=document.createElement('script'); s.src='app.js?v=30.8.2'; document.body.appendChild(s);
+    window.FPLBG_DATA={meta:{source:'V5 Optimisation',version:'Website V30.8.4',note:'Live JSON data from Public Export'},teams,qualification,standings,pots,playoff,knockout,rules,schedule,qualParticipants,groupQualified,podium};
+    const s=document.createElement('script'); s.src='app.js?v=30.8.4'; document.body.appendChild(s);
   } catch(err){
     console.error(err);
     const box=document.createElement('div'); box.className='loaderror'; box.innerHTML='<b>Грешка при зареждане на results.json</b><br>'+String(err.message||err); document.body.prepend(box);
