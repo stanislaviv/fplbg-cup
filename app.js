@@ -167,7 +167,7 @@ function scheduleCard(m,r){
   const score=x=>hasScore?`<strong>${x.score}</strong>`:'';
   const gd=x=>`${Number(x.gd)>0?'+':''}${x.gd}`;
   const decision=hasScore?`Match points ${m.a.mp}–${m.b.mp} • GD ${gd(m.a)} / ${gd(m.b)}`:'';
-  return `<article class="matchcard"><div class="matchtop"><span>${r.label}${m.pair?' • '+m.pair:''} • Match ${m.match}</span></div><div class="teamline${aWin?' winner':''}"><div><b>${m.a.team}</b><small>${meta(m.a)}</small></div>${score(m.a)}</div><div class="teamline${bWin?' winner':''}"><div><b>${m.b.team}</b><small>${meta(m.b)}</small></div>${score(m.b)}</div><div class="decision">${decision}</div></article>`;
+  return `<article class="matchcard"><div class="matchtop"><span>${r.label}${m.pair?' • '+m.pair:''} • Match ${m.match}</span></div><div class="teamline${aWin?' winner':bWin?' loser':''}"><div><b>${m.a.team}</b><small>${meta(m.a)}</small></div>${score(m.a)}</div><div class="teamline${bWin?' winner':aWin?' loser':''}"><div><b>${m.b.team}</b><small>${meta(m.b)}</small></div>${score(m.b)}</div><div class="decision">${decision}</div></article>`;
 }
 function renderSchedule(){
   const key=$('scheduleRound').value,q=$('scheduleSearch').value,r=D.schedule[key];
