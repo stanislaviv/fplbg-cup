@@ -12,7 +12,7 @@ function norm(v){return String(v??'').toLowerCase()}
 function hit(x,q){return !q||norm(`${x.id} ${x.team} ${x.manager}`).includes(norm(q))}
 function statusClass(x,i){return i<32?'directrow':i<96?'porow':'outrow'}
 function renderStandings(){let q=$('tableSearch').value,f=$('statusFilter').value; $('standings').innerHTML='';D.standings.forEach((x,i)=>{let b=i<32?'Qualified':i<96?'Play-off':'Eliminated';if(!hit(x,q)||(f&&b!==f))return;$('standings').innerHTML+=`<tr class="${statusClass(x,i)}"><td><b>${x.rank}</b></td><td>${b}</td><td>${x.id}</td><td><b>${x.team}</b></td><td>${x.manager}</td><td><b>${x.mp}</b></td><td>${Number(x.gd)>0?'+':''}${x.gd}</td><td>${x.pts}</td><td>${x.w}</td><td>${x.d}</td><td>${x.l}</td><td>${x.max}</td></tr>`})}
-function matchCard(m,round){let win=x=>norm(x.result).startsWith('win')?' winner':'';let score=x=>round==='final'?x.total:(x.total??x.score);let leg=x=>{if(!m.legs)return '';let vals=x===m.a?m.legs.a:m.legs.b,[g1,g2]=m.legs.gws;return `<small class="legscore">GW${g1} ${vals[0]} • GW${g2} ${vals[1]}</small>`};return `<article class="matchcard"><div class="matchtop"><span>${round.toUpperCase()} • Match ${m.match}</span></div><div class="teamline${win(m.a)}"><div><b>${m.a.team}</b><small>${m.a.manager} • ID ${m.a.id}${m.a.seed?' • Seed '+m.a.seed:''}</small>${leg(m.a)}</div><strong>${score(m.a)}</strong></div><div class="teamline${win(m.b)}"><div><b>${m.b.team}</b><small>${m.b.manager} • ID ${m.b.id}${m.b.seed?' • Seed '+m.b.seed:''}</small>${leg(m.b)}</div><strong>${score(m.b)}</strong></div><div class="decision">${norm(m.a.result).startsWith('win')?m.a.result:m.b.result||''}</div></article>`}
+function matchCard(m,round){let win=x=>norm(x.result).startsWith('win')?' winner':'';let score=x=>round==='final'?x.total:(x.total??x.score);let leg=x=>{if(!m.legs)return '';let vals=x===m.a?m.legs.a:m.legs.b,[g1,g2]=m.legs.gws;return `<small class="legscore">GW${g1} ${vals[0]} • GW${g2} ${vals[1]}</small>`};return `<article class="matchcard"><div class="matchtop"><span>${round.toUpperCase()} • Match ${m.match}</span></div><div class="teamline${win(m.a)}"><div><b>${m.a.team}</b><small>${m.a.id?((m.a.manager?m.a.manager+' • ':'')+'ID '+m.a.id+(m.a.seed?' • Seed '+m.a.seed:'')):(m.a.seed?'Seed '+m.a.seed:'')}</small>${leg(m.a)}</div><strong>${score(m.a)}</strong></div><div class="teamline${win(m.b)}"><div><b>${m.b.team}</b><small>${m.b.id?((m.b.manager?m.b.manager+' • ':'')+'ID '+m.b.id+(m.b.seed?' • Seed '+m.b.seed:'')):(m.b.seed?'Seed '+m.b.seed:'')}</small>${leg(m.b)}</div><strong>${score(m.b)}</strong></div><div class="decision">${norm(m.a.result).startsWith('win')?m.a.result:m.b.result||''}</div></article>`}
 let qualPage=1,poPage=1,koPage=1,PER=20;
 function pager(arr,page,fn,id){let pages=Math.max(1,Math.ceil(arr.length/PER));page=Math.min(page,pages);let start=(page-1)*PER;let cards=arr.slice(start,start+PER).map(fn).join('');let nav=pages>1?`<div class="pager"><button onclick="${id}Prev()">‹</button><span>Страница ${page} / ${pages} • ${arr.length} двойки</span><button onclick="${id}Next()">›</button></div>`:'';return {html:cards||'<p class="muted">Няма съвпадение.</p>',nav,pages,page}}
 function renderQual(){let r=$('qualRound').value,q=$('qualSearch').value;let arr=D.qualification[r].filter(m=>hit(m.a,q)||hit(m.b,q));let p=pager(arr,qualPage,m=>matchCard(m,r),'qual');qualPage=p.page;$('qualMatches').innerHTML=p.nav+p.html+p.nav}
@@ -191,7 +191,7 @@ function miniTeam(x){
   let w=norm(x.result).startsWith('win');
   return `<div class="bteam ${w?'bwinner':''}"><span>${x.team}</span><b>${x.total??x.gw1??''}</b></div>`;
 }
-function miniMatch(m){return `<div class="bmatch">${miniTeam(m.a)}${miniTeam(m.b)}</div>`}
+function miniMatch(m){if(!m)return `<div class="bmatch"><div class="bteam"><span>TBD</span><b></b></div><div class="bteam"><span>TBD</span><b></b></div></div>`;return `<div class="bmatch">${miniTeam(m.a)}${miniTeam(m.b)}</div>`}
 function renderBracketTree(){
   const rounds=['r32','r16','r8','r4','r2'];
   let cols=rounds.map(k=>{
@@ -205,9 +205,9 @@ function renderBracketTree(){
   const champion=D.podium?.Champion||{};
   const third=D.podium?.ThirdPlace||{};
   let center=`<div class="bcol finalcol podiumcol">
-    <div class="championhero"><div class="trophy">🏆</div><small>FPLBG CUP CHAMPION 2026/27</small><strong>${champion.team}</strong><span>${champion.manager}</span></div>
+    <div class="championhero"><div class="trophy">🏆</div><small>FPLBG CUP CHAMPION 2026/27</small><strong>${champion.team||'TBD'}</strong><span>${champion.manager||''}</span></div>
     <h4>ФИНАЛ • GW38</h4><div class="bmatches finalmatchonly">${miniMatch(finalMatch)}</div>
-    <div class="thirdhero"><small>🥉 3-ТО МЯСТО</small><strong>${third.team}</strong><span>${third.manager}</span><em>Победител в плейофа за 3-то място</em></div>
+    <div class="thirdhero"><small>🥉 3-ТО МЯСТО</small><strong>${third.team||'TBD'}</strong><span>${third.manager||''}</span><em>Победител в плейофа за 3-то място</em></div>
   </div>`;
   $('bracketTree').innerHTML=`<div class="bracketcanvas"><div class="bside leftside">${left}</div>${center}<div class="bside rightside">${right}</div></div><p class="bracketnote">Desktop изглед: лява и дясна половина на схемата. На телефон използвай „Карти“ за най-добра четимост.</p>`;
 }

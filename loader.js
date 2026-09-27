@@ -28,13 +28,36 @@
       const m={match:Number(x.Match),a:{...person(x.Team1ID,x.Team1,x.Team1Manager),score:x.Team1Points,result:ar},b:{...person(x.Team2ID,x.Team2,x.Team2Manager),score:x.Team2Points,result:br},winner:x.Winner};
       (Number(x.GW)===14?qualification.gw14:qualification.gw15).push(m);
     });
-    const standings=(raw['GROUP STANDINGS']||[]).map(x=>({rank:x.Position,status:x.Status,id:String(x.TeamID),team:x.TeamName,manager:x.Manager,mp:x.MP,gd:x.GD,pts:x.TournamentPoints,w:x.W,d:x.D,l:x.L,max:x.MaxScore}));
+    let standings=(raw['GROUP STANDINGS']||[]).map(x=>({rank:x.Position,status:x.Status,id:String(x.TeamID),team:x.TeamName,manager:x.Manager,mp:x.MP,gd:x.GD,pts:x.TournamentPoints,w:x.W,d:x.D,l:x.L,max:x.MaxScore}));
     const pots=[];
     for(let n=1;n<=10;n++) pots.push({pot:n,teams:(raw.POTS||[]).filter(x=>Number(x.Pot)===n).map(x=>({rank:x.Position,id:String(x.TeamID),team:x.TeamName,manager:x.Manager}))});
     const schedule={};
     for(let gw=16;gw<=25;gw++){
       const matches=(raw['GROUP SCHEDULE']||[]).filter(x=>Number(x.GW)===gw).map(x=>({match:Number(x.Match),pair:'',a:{...person(x.Team1ID,x.Team1),score:x.Team1Score,mp:x.Team1MP,gd:x.Team1GD},b:{...person(x.Team2ID,x.Team2),score:x.Team2Score,mp:x.Team2MP,gd:x.Team2GD}}));
       schedule['gw'+gw]={label:`Кръг ${gw-15} • GW${gw}`,matches};
+    }
+
+    // V30.8: Group standings exist as soon as the 200-team group field is known.
+    // If the export does not yet contain GROUP STANDINGS (QA/early phase), build a live table
+    // only from group matches whose scores are actually present. Future fixtures never count.
+    if(!standings.length && (raw['GROUP QUALIFIED']||[]).length){
+      const live=(raw['GROUP QUALIFIED']||[]).map((x,i)=>({
+        rank:i+1,status:'',id:String(x.TeamID),team:x.TeamName,manager:x.Manager,
+        mp:0,gd:0,pts:0,w:0,d:0,l:0,max:0,_seed:i+1
+      }));
+      const lm=new Map(live.map(x=>[x.id,x]));
+      (raw['GROUP SCHEDULE']||[]).forEach(m=>{
+        if(m.Team1Score==null || m.Team2Score==null) return;
+        const a=lm.get(String(m.Team1ID)), b=lm.get(String(m.Team2ID)); if(!a||!b) return;
+        const as=Number(m.Team1Score)||0, bs=Number(m.Team2Score)||0;
+        a.mp+=Number(m.Team1MP)||0; b.mp+=Number(m.Team2MP)||0;
+        a.gd+=as-bs; b.gd+=bs-as; a.pts+=as; b.pts+=bs;
+        a.max=Math.max(a.max,as); b.max=Math.max(b.max,bs);
+        if(as>bs){a.w++;b.l++;} else if(bs>as){b.w++;a.l++;} else {a.d++;b.d++;}
+      });
+      live.sort((a,b)=>b.mp-a.mp || b.gd-a.gd || b.pts-a.pts || b.w-a.w || b.max-a.max || a._seed-b._seed);
+      live.forEach((x,i)=>{x.rank=i+1;x.status=i<32?'Qualified':i<96?'Play-off':'Eliminated';delete x._seed;});
+      standings=live;
     }
     const legSets={
       playoff:{rows:raw['PLAYOFF LEGS']||[],gws:[26,27]},
@@ -56,6 +79,16 @@
       const match=i/2+1, legs=legsFor('playoff',match);
       playoff.push({match,legs,a:{...person(a.TeamID,a.TeamName,a.Manager),seed:a.Seed,gw26:a.GW26,gw27:a.GW27,total:a.Total,result:a.Result},b:{...person(b.TeamID,b.TeamName,b.Manager),seed:b.Seed,gw26:b.GW26,gw27:b.GW27,total:b.Total,result:b.Result}});
     }
+    // V30.8 placeholders: the Play-off structure is known before the final group table.
+    // Rules: 33 v 96, 34 v 95, ... 64 v 65.
+    if(!playoff.length && (raw['GROUP QUALIFIED']||[]).length){
+      for(let i=0;i<32;i++){
+        const hi=33+i, lo=96-i;
+        playoff.push({match:i+1,legs:null,
+          a:{id:'',team:`${hi}-ти в груповото класиране`,manager:'Placeholder',seed:hi,gw26:null,gw27:null,total:null,result:''},
+          b:{id:'',team:`${lo}-ти в груповото класиране`,manager:'Placeholder',seed:lo,gw26:null,gw27:null,total:null,result:''}});
+      }
+    }
     const stageMap={
       '1/32':['r32','1/32','GW28–29'],'1/16':['r16','1/16','GW30–31'],'1/8':['r8','1/8','GW32–33'],'1/4':['r4','1/4','GW34–35'],'1/2':['r2','1/2','GW36–37'],
       'Final':['final','Финал','GW38'],'3rd Place':['final','Финал','GW38']
@@ -66,11 +99,34 @@
       const match=key==='final'?(x.Stage==='Final'?1:2):Number(x.Match);
       knockout[key].matches.push({match,stage:x.Stage,legs:key==='final'?null:legsFor(key,match),a:{...person(x.Team1ID,x.Team1),total:x.Team1Total,result:ar},b:{...person(x.Team2ID,x.Team2),total:x.Team2Total,result:br}});
     });
+
+    // V30.8 phase-aware placeholders. They describe only the tournament route; no future team is inferred.
+    const ph=(team)=>({id:'',team,manager:'',total:null,result:''});
+    if(!knockout.r32.matches.length && (raw['GROUP QUALIFIED']||[]).length){
+      for(let i=0;i<32;i++) knockout.r32.matches.push({match:i+1,stage:'1/32',legs:null,
+        a:ph(`${i+1}-ви директно класиран от групата`),
+        b:ph(`${i+1===1?'Най-ниско класиран':i+1===32?'Най-високо класиран':(i+1)+'-ти от края'} победител от Play-off`)});
+    }
+    const makeWinnerRound=(key,count,source,label)=>{
+      if(knockout[key].matches.length) return;
+      for(let i=0;i<count;i++) knockout[key].matches.push({match:i+1,stage:label,legs:null,
+        a:ph(`Победител ${source} • Match ${i*2+1}`),b:ph(`Победител ${source} • Match ${i*2+2}`)});
+    };
+    if((raw['GROUP QUALIFIED']||[]).length){
+      makeWinnerRound('r16',16,'1/32','1/16');
+      makeWinnerRound('r8',8,'1/16','1/8');
+      makeWinnerRound('r4',4,'1/8','1/4');
+      makeWinnerRound('r2',2,'1/4','1/2');
+      if(!knockout.final.matches.length){
+        knockout.final.matches.push({match:1,stage:'Final',legs:null,a:ph('Победител 1/2 • Match 1'),b:ph('Победител 1/2 • Match 2')});
+        knockout.final.matches.push({match:2,stage:'3rd Place',legs:null,a:ph('Загубил 1/2 • Match 1'),b:ph('Загубил 1/2 • Match 2')});
+      }
+    }
     const groupQualified=(raw['GROUP QUALIFIED']||[]).map(x=>({rank:x.Position,status:x.Status,id:String(x.TeamID),team:x.TeamName,manager:x.Manager,link:x.TeamLink}));
     const podium={};
     (raw['TOURNAMENT PODIUM']||[]).forEach(x=>{const p=person(x.TeamID,x.TeamName); podium[x.Position]={...p,position:x.Position};});
-    window.FPLBG_DATA={meta:{source:'V5 Optimisation',version:'Website V29.1',note:'Live JSON data from Public Export'},teams,qualification,standings,pots,playoff,knockout,rules,schedule,qualParticipants,groupQualified,podium};
-    const s=document.createElement('script'); s.src='app.js?v=29.1'; document.body.appendChild(s);
+    window.FPLBG_DATA={meta:{source:'V5 Optimisation',version:'Website V30.8',note:'Live JSON data from Public Export'},teams,qualification,standings,pots,playoff,knockout,rules,schedule,qualParticipants,groupQualified,podium};
+    const s=document.createElement('script'); s.src='app.js?v=30.8'; document.body.appendChild(s);
   } catch(err){
     console.error(err);
     const box=document.createElement('div'); box.className='loaderror'; box.innerHTML='<b>Грешка при зареждане на results.json</b><br>'+String(err.message||err); document.body.prepend(box);
