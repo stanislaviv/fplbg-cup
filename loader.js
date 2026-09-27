@@ -50,7 +50,7 @@
         if(m.Team1Score==null || m.Team2Score==null) return;
         const a=lm.get(String(m.Team1ID)), b=lm.get(String(m.Team2ID)); if(!a||!b) return;
         const as=Number(m.Team1Score)||0, bs=Number(m.Team2Score)||0;
-        a.mp+=Number(m.Team1MP)||0; b.mp+=Number(m.Team2MP)||0;
+        a.mp+=1; b.mp+=1;
         a.gd+=as-bs; b.gd+=bs-as; a.pts+=as; b.pts+=bs;
         a.max=Math.max(a.max,as); b.max=Math.max(b.max,bs);
         if(as>bs){a.w++;b.l++;} else if(bs>as){b.w++;a.l++;} else {a.d++;b.d++;}
@@ -125,8 +125,8 @@
     const groupQualified=(raw['GROUP QUALIFIED']||[]).map(x=>({rank:x.Position,status:x.Status,id:String(x.TeamID),team:x.TeamName,manager:x.Manager,link:x.TeamLink}));
     const podium={};
     (raw['TOURNAMENT PODIUM']||[]).forEach(x=>{const p=person(x.TeamID,x.TeamName); podium[x.Position]={...p,position:x.Position};});
-    window.FPLBG_DATA={meta:{source:'V5 Optimisation',version:'Website V30.8',note:'Live JSON data from Public Export'},teams,qualification,standings,pots,playoff,knockout,rules,schedule,qualParticipants,groupQualified,podium};
-    const s=document.createElement('script'); s.src='app.js?v=30.8'; document.body.appendChild(s);
+    window.FPLBG_DATA={meta:{source:'V5 Optimisation',version:'Website V30.8.2',note:'Live JSON data from Public Export'},teams,qualification,standings,pots,playoff,knockout,rules,schedule,qualParticipants,groupQualified,podium};
+    const s=document.createElement('script'); s.src='app.js?v=30.8.2'; document.body.appendChild(s);
   } catch(err){
     console.error(err);
     const box=document.createElement('div'); box.className='loaderror'; box.innerHTML='<b>Грешка при зареждане на results.json</b><br>'+String(err.message||err); document.body.prepend(box);

@@ -461,3 +461,14 @@ body{
 .hero .intro > div:first-child > p{
   color:#1267e8 !important;
 }
+
+/* V30.8.2: neutral future state + provisional two-leg status */
+.teamline strong{background:#f1f4f8!important;color:#64748b!important}
+.teamline.winner{background:#edf9f2!important;border-left-color:#13bd6b!important}
+.teamline.winner strong{background:#d7f5e3!important;color:#08753f!important}
+.teamline.loser{background:#fff3f3!important;border-left-color:#e36a6a!important}
+.teamline.loser strong{background:#fde7e7!important;color:#b42318!important}
+.teamline.provisional-winner{background:#f2fbf5!important;border-left-color:#52b788!important}
+.teamline.provisional-winner strong{background:#e3f6e9!important;color:#18794e!important}
+.teamline.provisional-loser{background:#fff7f7!important;border-left-color:#e8a0a0!important}
+.teamline.provisional-loser strong{background:#fbecec!important;color:#a94442!important}
