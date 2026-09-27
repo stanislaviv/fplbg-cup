@@ -107,7 +107,7 @@
         a:ph(`${i+1}-ви директно класиран от групата`),
         b:ph(`${i+1===1?'Най-ниско класиран':i+1===32?'Най-високо класиран':(i+1)+'-ти от края'} победител от Play-off`)});
     }
-    // V30.8.7: promote only winners that are already known from a completed source round.
+    // V30.8.8: promote only winners that are already known from a completed source round.
     // Keep future rounds as placeholders; never read future results to populate them.
     const finalWinner=(m)=>{
       const ar=String(m?.a?.result ?? '').toLowerCase();
@@ -149,7 +149,7 @@
     const podium={};
     (raw['TOURNAMENT PODIUM']||[]).forEach(x=>{const p=person(x.TeamID,x.TeamName); podium[x.Position]={...p,position:x.Position};});
     window.FPLBG_DATA={meta:{source:'V5 Optimisation',version:'Website V30.8.4',note:'Live JSON data from Public Export'},teams,qualification,standings,pots,playoff,knockout,rules,schedule,qualParticipants,groupQualified,podium};
-    const s=document.createElement('script'); s.src='app.js?v=30.8.7'; document.body.appendChild(s);
+    const s=document.createElement('script'); s.src='app.js?v=30.8.8'; document.body.appendChild(s);
   } catch(err){
     console.error(err);
     const box=document.createElement('div'); box.className='loaderror'; box.innerHTML='<b>Грешка при зареждане на results.json</b><br>'+String(err.message||err); document.body.prepend(box);

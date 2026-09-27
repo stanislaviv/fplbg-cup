@@ -37,7 +37,7 @@ function renderKO(){
     if(key!=='final') return matchCard(m,r.label);
     const title=m.match===1?'🏆 ФИНАЛ • GW38':'🥉 ПЛЕЙОФ ЗА 3-ТО МЯСТО • GW38';
     let win=x=>norm(x.result).startsWith('win')?' winner':'';
-    return `<article class="matchcard"><div class="matchtop"><span>${title}</span></div><div class="teamline${win(m.a)}"><div><b>${m.a.team}</b><small>${m.a.manager} • ID ${m.a.id}</small></div><strong>${m.a.total}</strong></div><div class="teamline${win(m.b)}"><div><b>${m.b.team}</b><small>${m.b.manager} • ID ${m.b.id}</small></div><strong>${m.b.total}</strong></div><div class="decision">${norm(m.a.result).startsWith('win')?m.a.result:m.b.result||''}</div></article>`;
+    return `<article class="matchcard"><div class="matchtop"><span>${title}</span></div><div class="teamline${win(m.a)}"><div><b>${m.a.team}</b><small>${m.a.manager} • ID ${m.a.id}</small></div><strong>${m.a.total??'TBD'}</strong></div><div class="teamline${win(m.b)}"><div><b>${m.b.team}</b><small>${m.b.manager} • ID ${m.b.id}</small></div><strong>${m.b.total??'TBD'}</strong></div><div class="decision">${norm(m.a.result).startsWith('win')?m.a.result:m.b.result||''}</div></article>`;
   };
   let p=pager(arr,koPage,card,'ko');koPage=p.page;$('knockoutMatches').innerHTML=p.nav+p.html+p.nav
 }
