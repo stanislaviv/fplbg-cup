@@ -107,12 +107,42 @@
         a:ph(`${i+1}-ви директно класиран от групата`),
         b:ph(`${i+1===1?'Най-ниско класиран':i+1===32?'Най-високо класиран':(i+1)+'-ти от края'} победител от Play-off`)});
     }
+    // V30.8.5: once a round is actually completed, promote its real winners into the
+    // next round even when the next-round rows are intentionally absent from the QA JSON.
+    // This keeps the phase transition live without leaking any future scores/results.
+    const resolvedWinner=(m)=>{
+      if(!m) return null;
+      const ar=norm(m.a?.result||''), br=norm(m.b?.result||'');
+      if(ar.startsWith('win')) return m.a;
+      if(br.startsWith('win')) return m.b;
+      if(ar.startsWith('lose')) return m.b;
+      if(br.startsWith('lose')) return m.a;
+      const at=Number(m.a?.total), bt=Number(m.b?.total);
+      if(Number.isFinite(at)&&Number.isFinite(bt)&&at!==bt) return at>bt?m.a:m.b;
+      return null;
+    };
+    const promoteCompletedRound=(targetKey,sourceKey,targetLabel)=>{
+      if(knockout[targetKey].matches.length) return true;
+      const src=[...(knockout[sourceKey].matches||[])].sort((a,b)=>Number(a.match)-Number(b.match));
+      if(!src.length || src.some(m=>!resolvedWinner(m))) return false;
+      for(let i=0;i<src.length;i+=2){
+        const wa=resolvedWinner(src[i]), wb=resolvedWinner(src[i+1]);
+        if(!wa||!wb) return false;
+        knockout[targetKey].matches.push({match:i/2+1,stage:targetLabel,legs:null,
+          a:{...wa,total:null,result:''},b:{...wb,total:null,result:''}});
+      }
+      return true;
+    };
     const makeWinnerRound=(key,count,source,label)=>{
       if(knockout[key].matches.length) return;
       for(let i=0;i<count;i++) knockout[key].matches.push({match:i+1,stage:label,legs:null,
         a:ph(`Победител ${source} • Match ${i*2+1}`),b:ph(`Победител ${source} • Match ${i*2+2}`)});
     };
     if((raw['GROUP QUALIFIED']||[]).length){
+      promoteCompletedRound('r16','r32','1/16');
+      promoteCompletedRound('r8','r16','1/8');
+      promoteCompletedRound('r4','r8','1/4');
+      promoteCompletedRound('r2','r4','1/2');
       makeWinnerRound('r16',16,'1/32','1/16');
       makeWinnerRound('r8',8,'1/16','1/8');
       makeWinnerRound('r4',4,'1/8','1/4');
@@ -125,8 +155,8 @@
     const groupQualified=(raw['GROUP QUALIFIED']||[]).map(x=>({rank:x.Position,status:x.Status,id:String(x.TeamID),team:x.TeamName,manager:x.Manager,link:x.TeamLink}));
     const podium={};
     (raw['TOURNAMENT PODIUM']||[]).forEach(x=>{const p=person(x.TeamID,x.TeamName); podium[x.Position]={...p,position:x.Position};});
-    window.FPLBG_DATA={meta:{source:'V5 Optimisation',version:'Website V30.8.4',note:'Live JSON data from Public Export'},teams,qualification,standings,pots,playoff,knockout,rules,schedule,qualParticipants,groupQualified,podium};
-    const s=document.createElement('script'); s.src='app.js?v=30.8.4'; document.body.appendChild(s);
+    window.FPLBG_DATA={meta:{source:'V5 Optimisation',version:'Website V30.8.5',note:'Live JSON data from Public Export'},teams,qualification,standings,pots,playoff,knockout,rules,schedule,qualParticipants,groupQualified,podium};
+    const s=document.createElement('script'); s.src='app.js?v=30.8.5'; document.body.appendChild(s);
   } catch(err){
     console.error(err);
     const box=document.createElement('div'); box.className='loaderror'; box.innerHTML='<b>Грешка при зареждане на results.json</b><br>'+String(err.message||err); document.body.prepend(box);
